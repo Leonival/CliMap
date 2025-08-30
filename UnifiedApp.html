@@ -1,0 +1,4053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CliMap</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{primary:'#3b82f6',secondary:'#10b981'},borderRadius:{button:'8px'}}}};
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Pacifico&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+    <style>
+  body{font-family:'Inter',sans-serif}
+
+  /* 👇 让复制按钮默认隐藏，仅在选中时显示 */
+  .copy-button{
+    opacity:0;
+    visibility:hidden;
+    transform: translateY(-6px);
+    transition: opacity .15s ease, transform .15s ease, visibility .15s ease;
+  }
+  .copy-button.show{
+    opacity:1;
+    visibility:visible;
+    transform: translateY(0);
+  }
+  /* Overlay styles */
+.map-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+.map-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+.map-overlay img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+
+  .chatbot-item { position: relative; }
+
+.chatbot-popup{
+  position: absolute;
+  left: 200px;
+  top: 0;
+  opacity: 0;            /* 默认隐藏 */
+  visibility: hidden;    /* 默认隐藏 */
+  transform: translateX(10px);
+  transition: opacity .25s ease, transform .25s ease, visibility .25s ease;
+  z-index: 50;
+}
+
+/* 由 JS 切换的类，显示弹层 */
+.chatbot-item.is-open .chatbot-popup{
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+
+  /* 保险：确保容器是定位上下文，脚本设置的 left/top 才能生效 */
+  #headline-container{ position: relative; }
+
+  /* optional: faint caret while typing */
+.typing-caret::after{
+  content:"";
+  display:inline-block;
+  width:8px; height:1em;
+  margin-left:2px;
+  background: currentColor;
+  opacity:.4;
+  animation: caretBlink .9s steps(1,end) infinite;
+  vertical-align:-2px;
+}
+@keyframes caretBlink{ 50% { opacity: 0; } }
+
+</style>
+
+</head>
+
+<!-- BASELINE VERSION: v1 (2025-08-26) -->
+<body class="bg-gray-50">
+<main id="app" class="min-h-screen"></main>
+
+
+<template id="tpl-UserID">
+<div id="page-userid" class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+<div class="form-container bg-white rounded-lg p-8 w-full max-w-md shadow">
+<div class="text-center mb-4">
+<h1 class="text-lg font-medium text-gray-900">Enter your access ID:</h1>
+</div>
+
+<form class="space-y-4 mt-2" data-readdy-form id="access-id-form">
+  <div>
+    <input
+      id="accessId"
+      name="accessId"
+      type="text"
+      placeholder="ID Number"
+      class="w-full px-4 py-3 border border-gray-300 rounded-md text-gray-900 placeholder-gray-500 focus:border-primary transition-colors duration-200"
+      required
+    />
+  </div>
+
+  <div id="submitStatus" class="text-center hidden">
+    <p class="text-sm"></p>
+  </div>
+
+  <!-- add spacing here -->
+  <a
+    data-readdy="true"
+    href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/79387a31-e6ab-4668-89d6-7c5b79e1bcca"
+    class="mt-4 block"
+  >
+    <button
+      type="button"
+      class="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 !rounded-button whitespace-nowrap transition-colors duration-200"
+    >
+      Continue
+    </button>
+  </a>
+</form>
+
+
+</div>
+<script id="form-handler">
+document.addEventListener('DOMContentLoaded', function() {
+const form = document.getElementById('access-id-form');
+const input = document.getElementById('accessId');
+const submitStatus = document.getElementById('submitStatus');
+const statusText = submitStatus.querySelector('p');
+form.addEventListener('submit', (e) => e.preventDefault());
+input.addEventListener('input', function(e) {
+e.target.value = e.target.value.replace(/[^0-9]/g, '');
+});
+
+});
+</script>
+
+</div>
+</template>
+
+
+
+<!-- template before p1 -->
+<template id="tpl-Before_p1">
+<div id="page-beforep1">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" data-goto="Before_p2">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+Scientists say this map represents the US in 30 years if we don't reverse climate change.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/PwCVi8I.jpeg"
+  />
+</div>
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+<!-- template before p2 -->
+<template id="tpl-Before_p2">
+<div id="page-beforep2">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+Greenland's largest glacier is growing, but the press says it is melting 100 times faster than previously thought.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-full h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/H59OpiP.png"
+  />
+</div>
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+<!-- template before p3 -->
+<template id="tpl-Before_p3">
+<div id="page-beforep3">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+I want to thank all those who help make the entire planet more green by adding more CO2 to our atmosphere. CO2 is the natural green accelerator. l love CO2 and #ClimateScam should too.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/bsh2DFm.jpeg"
+  />
+</div>
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+<!-- template before p4 -->
+<template id="tpl-Before_p4">
+<div id="page-beforep4">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+I can't ever remember seeing widespread cold like this. The UN says earth is boiling
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/oNDrDyA.png"
+  />
+</div>
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+
+<template id="tpl-LLM_p1">
+<div id="page-llmp1">
+
+<div class="flex min-h-screen justify-center gap-4 px-8 ml-12">
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl">
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-8 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+'Sinking' Pacific nation is getting bigger. Examined changes in the geography of Tuvalu’s nine atolls and 101 reef islands between 1971 and 2014, using aerial photographs and satellite imagery. Over that period, eight of the atolls and almost three-quarters of the islands grew.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/GBk7l4F.png"
+  />
+</div>
+
+
+</div>
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4">
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+<div class="w-[500px] bg-transparent p-6 overflow-y-auto overflow-x-visible sticky top-4 h-[calc(100vh-2rem)] ml-4">
+<h3 class="text-lg font-semibold text-gray-800 mb-6">AI Assistants</h3>
+<!-- General LLM Chatbots -->
+<div>
+<div class="space-y-3">
+
+  <div class="chatbot-item relative">
+<a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst"
+   target="_blank"
+   class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">ChatGPT</div>
+    <div class="text-xs text-gray-500">Headline: 3 ; Map: 5</div>
+  </div>
+</a>
+
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+
+  <p class="text-sm text-gray-600" data-typed>
+    <strong>Headline credibility rating:</strong> 3 (Mostly Credible)<br><br>
+    The headline simplifies a complex finding. Studies (e.g., Kench et al. 2018, <em>Nature Communications</em>) show many atoll islands—including Tuvalu—have grown in land area since the 1970s due to natural sediment transport and coral-derived material. However, calling Tuvalu “sinking” is misleading: the nation faces <strong>sea-level rise</strong>, erosion, storm surge, and saltwater intrusion risks, so increased land area does not remove the existential threats to habitability. <em>(In-house knowledge)</em><br><br>
+
+    <strong>Map credibility rating:</strong> 5 (Highly Credible)<br><br>
+    The maps compare shorelines from 1971, 1984, 2006, and 2014 using aerial and satellite imagery, consistent with peer-reviewed geospatial analyses of atoll geomorphology. <em>(In-house knowledge)</em><br><br>
+
+    <strong>Reference:</strong> Kench, P. S., et al. (2018). <em>Patterns of island change and persistence offer alternate adaptation pathways for atoll nations</em>. <em>Nature Communications</em>, 9, 605.<br><br>
+    <strong>URL:</strong> <a href="https://www.nature.com/articles/s41467-018-02954-1" class="text-blue-600 underline">https://www.nature.com/articles/s41467-018-02954-1</a>
+  </p>
+</div>
+</div>
+
+<div class="chatbot-item relative">
+<a href="https://gemini.google.com/gem/980f79a3a48b" target="_blank" class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://helios-i.mashable.com/imagery/articles/00zEnhbB6mXQs8x5yXw38bT/images-2.fit_lim.size_376x.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">Gemini</div>
+    <div class="text-xs text-gray-500">Headline: 3 ; Map: 4</div>
+  </div>
+</a>
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+<p class="text-sm text-gray-600" data-typed><strong>Headline credibility rating:</strong> 3 (Mostly Credible)<br><br>
+The headline presents a seemingly counterintuitive finding—that a "sinking" nation is getting bigger. While it cites a specific study with dates and locations (Tuvalu's atolls), which lends it a degree of credibility, the use of the word "'Sinking'" in quotes could be a form of sensationalism or a subtle attempt to cast doubt on the established narrative of sea-level rise affecting low-lying islands. The headline might be oversimplifying a complex scientific finding and could be subject to confirmation bias for those who wish to downplay the effects of climate change.
+<br><br>
+ <strong>Map credibility rating: 4</strong><br><br>
+The map is a composite of satellite and aerial imagery with superimposed outlines showing changes in land area over time for several islands in Tuvalu. It provides a clear visual representation of the data described in the headline. The use of a legend with different colors corresponding to specific years (1971, 1984, 2006, 2014) is a trustworthy practice that allows for a direct comparison of the changes. The inclusion of scale bars also contributes to the map's credibility. It directly supports the claim that the islands have shown growth, visually demonstrating the geographic changes mentioned.</p>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+</template>
+
+<template id="tpl-LLM_p2">
+<div id="page-llmp2">
+
+<div class="flex min-h-screen justify-center gap-4 px-8 ml-12">
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl">
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-8 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+After 40 years of "unprecedented man made global boiling" - there is more Antarctic sea ice than there was 40 years ago.  Ice doesn't lie, but climate scientists do.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+
+
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/VseGd2i.png"
+  />
+</div>
+
+</div>
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4">
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+<div class="w-[500px] bg-transparent p-6 overflow-y-auto overflow-x-visible sticky top-4 h-[calc(100vh-2rem)] ml-4">
+<h3 class="text-lg font-semibold text-gray-800 mb-6">AI Assistants</h3>
+<!-- General LLM Chatbots -->
+<div>
+<div class="space-y-3">
+
+    <div class="chatbot-item relative">
+<a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst"
+   target="_blank"
+   class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">ChatGPT</div>
+    <div class="text-xs text-gray-500">Headline: -4; Map: -2</div>
+  </div>
+</a>
+
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+
+  <p class="text-sm text-gray-600" data-typed>
+    <strong>Headline credibility rating:</strong> -4 (Not Credible)<br><br>
+    The headline claims Antarctic sea ice has increased over 40 years, contradicting the overwhelming scientific evidence that Antarctic sea ice extent has declined significantly since 2014 after decades of fluctuation. The phrase “unprecedented man made global boiling” is a biased, mocking distortion of climate science. Suggesting that "climate scientists lie" is misinformation that dismisses peer-reviewed evidence without basis. <em>(In-house knowledge)</em><br><br>
+
+    <strong>Map credibility rating:</strong> -2 (Low Credibility)<br><br>
+    The map visually shows regional ice gain (green) and loss (red), but it oversimplifies trends by comparing only two points in time (1985 vs. 2025). Sea ice extent varies seasonally and annually; long-term averages are required for accurate conclusions. Selective framing here misleads viewers into thinking overall Antarctic sea ice is growing, which contradicts data from the National Snow and Ice Data Center (NSIDC), showing a net decline in recent years. <em>(In-house knowledge)</em><br><br>
+
+  </p>
+</div>
+</div>
+
+<div class="chatbot-item relative">
+<a href="https://gemini.google.com/gem/980f79a3a48b" target="_blank" class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://helios-i.mashable.com/imagery/articles/00zEnhbB6mXQs8x5yXw38bT/images-2.fit_lim.size_376x.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">Gemini</div>
+    <div class="text-xs text-gray-500">Headline: -5; Map: 5</div>
+  </div>
+</a>
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+  <p class="text-sm text-gray-600" data-typed>
+    <strong>Headline credibility rating:</strong> -5 (Not Credible)<br><br>
+    The headline employs several misinformation tactics. The phrase "unprecedented man made global boiling" is a rhetorical exaggeration and misrepresentation of scientific language. While Antarctic sea ice did show a slight increase in extent for several decades, a dramatic decline has occurred since 2014, with multiple record lows in recent years, making the claim "there is more Antarctic sea ice than there was 40 years ago" factually inaccurate when considering the most recent data. The statement "Ice doesn't lie, but climate scientists do" is an ad hominem attack that falsely accuses scientists of deceit and is designed to erode public trust in climate science. This headline is a clear example of cherry-picking data and using personal attacks to promote a misleading narrative.<br><br>
+
+    <strong>Map credibility rating:</strong> 5 (Highly Credible)<br><br>
+    The map's credibility is high because it is from a trusted and authoritative source: the National Snow and Ice Data Center (NSIDC) at the University of Colorado Boulder. The map provides a direct comparison of current sea ice extent (white areas) with historical data (green and red areas) and the 1981-2010 median ice edge (orange line). This methodology is standard in cryospheric science for visualizing changes over time. The map is based on satellite data, a reliable source for monitoring polar regions. The use of a clear legend and the inclusion of the source (National Snow and Ice Data Center, University of Colorado Boulder) further enhance its trustworthiness. <em>(In-house knowledge, Copernicus Climate, Carbon Brief)</em><br><br>
+
+  </p>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+</template>
+
+<template id="tpl-LLM_p3">
+<div id="page-llmp3">
+
+<div class="flex min-h-screen justify-center gap-4 px-8 ml-12">
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl">
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-8 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+What global warming looks like at Antarctica -- none in 70 years.<br>
+But climate idiots try to blame CO2 for the red areas... instead of the volcanoes underneath.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/CArBm57.jpeg"
+  />
+</div>
+</div>
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4">
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+<div class="w-[500px] bg-transparent p-6 overflow-y-auto overflow-x-visible sticky top-4 h-[calc(100vh-2rem)] ml-4">
+<h3 class="text-lg font-semibold text-gray-800 mb-6">AI Assistants</h3>
+<!-- General LLM Chatbots -->
+<div>
+<div class="space-y-3">
+
+    <div class="chatbot-item relative">
+<a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst"
+   target="_blank"
+   class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">ChatGPT</div>
+    <div class="text-xs text-gray-500">Headline: -4; Map: 4</div>
+  </div>
+</a>
+
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+
+  <p class="text-sm text-gray-600" data-typed>
+    <strong>Headline credibility rating:</strong> -4 (Not Credible)<br><br>
+    The headline dismisses climate science by claiming “none in 70 years” despite evidence of strong warming in West Antarctica and the Antarctic Peninsula. It introduces bias by labeling scientists as “climate idiots.” Scientific consensus shows that while East Antarctica has been relatively stable or cooled slightly, West Antarctica and the Peninsula have warmed significantly, primarily linked to atmospheric and oceanic changes driven by greenhouse gases (In-house knowledge). Volcanic activity exists beneath Antarctica, but studies show it cannot explain the scale or regional pattern of observed warming.<br><br>
+
+    <strong>Map credibility rating:</strong> 4 (Credible)<br><br>
+    The map appears to be a scientific temperature anomaly visualization (1984–2014 minus 1950–1980). It shows warming in West Antarctica and cooling in East Antarctica, consistent with published peer-reviewed research on Antarctic climate variability. The map itself is credible, but the interpretation in the post is misleading, as it ignores the broader context of global warming and Antarctic regional differences.<br><br>
+  </p>
+</div>
+</div>
+
+<div class="chatbot-item relative">
+<a href="https://gemini.google.com/gem/980f79a3a48b" target="_blank" class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://helios-i.mashable.com/imagery/articles/00zEnhbB6mXQs8x5yXw38bT/images-2.fit_lim.size_376x.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">Gemini</div>
+    <div class="text-xs text-gray-500">Headline: -5; Map: -5</div>
+  </div>
+</a>
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+<p class="text-sm text-gray-600" data-typed>
+  <strong>Headline credibility rating:</strong> -5 (Not Credible)<br><br>
+  The headline is not credible because it contains demonstrably false information and employs cognitive biases to mislead the reader. The claim that there has been "none [global warming] in 70 years" in Antarctica is false. While parts of East Antarctica have remained stable or even cooled, the Antarctic Peninsula and West Antarctica have experienced significant warming. The Antarctic Peninsula, for example, has warmed by approximately 3°C since the mid-20th century, which is one of the fastest warming rates on Earth <em>(In-house knowledge)</em>. Additionally, the use of the term "climate idiots" is an ad hominem attack, a form of cognitive bias that aims to discredit an opponent's argument by insulting them rather than addressing their claims. The headline also presents a false dichotomy, suggesting that warming is either caused by CO2 or by volcanoes, when in reality, they are two separate processes with very different scales of impact.<br><br>
+
+  <strong>Map credibility rating:</strong> -5 (Not Credible)<br><br>
+  Based on the headline's description, the map's credibility is extremely low due to its misleading presentation. While there are active subglacial volcanoes in Antarctica (<strong>Reference URL:</strong><a href="https://www.antarcticglaciers.org/glacial-geology/antarctic-ice-sheet/subglacial-volcanoes/" class="text-blue-600 underline"> https://www.antarcticglaciers.org/glacial-geology/antarctic-ice-sheet/subglacial-volcanoes/</a>), they are not the primary cause of the widespread, rapid warming and ice loss observed in West Antarctica and the Antarctic Peninsula. The majority of the heat causing melting comes from warm ocean currents, known as Circumpolar Deep Water, which are in turn warmed by global climate change (<strong>Reference URL:</strong><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6014989/" class="text-blue-600 underline"> https://pmc.ncbi.nlm.nih.gov/articles/PMC6014989/</a>) Attributing the "red areas" solely to volcanoes is an example of a cherry-picking bias, where a minor, localized factor is presented as the main cause to dismiss the scientifically accepted role of greenhouse gases.<br><br>
+
+</p>
+
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+</template>
+
+<template id="tpl-LLM_p4">
+<div id="page-llmp4">
+
+<div class="flex min-h-screen justify-center gap-4 px-8 ml-12">
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl">
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-8 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+Thanks to a century of unprecedented man-made global warming, most of North America and Asia are below -30C.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+
+<div class="map-container mt-4 flex justify-center">
+  <img
+    alt="Climate Change Map"
+    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/ZbGmR3h.png"
+  />
+</div>
+
+</div>
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4">
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+<div class="w-[500px] bg-transparent p-6 overflow-y-auto overflow-x-visible sticky top-4 h-[calc(100vh-2rem)] ml-4">
+<h3 class="text-lg font-semibold text-gray-800 mb-6">AI Assistants</h3>
+<!-- General LLM Chatbots -->
+<div>
+<div class="space-y-3">
+
+  <div class="chatbot-item relative">
+<a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst"
+   target="_blank"
+   class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">ChatGPT</div>
+    <div class="text-xs text-gray-500">Headline: 3-; Map: 5</div>
+  </div>
+</a>
+
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+
+  <p class="text-sm text-gray-600" data-typed>
+    <strong>Headline credibility rating:</strong> -3 (Low Credibility)<br><br>
+    The claim is misleading. The map shows a snapshot of minimum daily temperatures on December 22, 2022, not long-term climate trends. Cold outbreaks in winter are weather events, not evidence of or against global warming. In fact, global warming leads to warmer average temperatures worldwide, even if some regions still experience extreme cold. Suggesting that “a century of man-made global warming” caused most of North America and Asia to be below –30 °C is factually incorrect—those cold anomalies are due to short-term Arctic air intrusions, not long-term climate warming <em>(In-house knowledge)</em><br><br>
+
+    <strong>Map credibility rating:</strong> 5 (Highly Credible)<br><br>
+    The map from <em>Climate Reanalyzer (University of Maine)</em> accurately visualizes modeled daily minimum temperatures using GFS reanalysis data. The data is scientifically credible, but misinterpretation arises when short-term weather maps are used to make claims about long-term climate change. <br><br>
+
+  </p>
+</div>
+</div>
+
+<div class="chatbot-item relative">
+<a href="https://gemini.google.com/gem/980f79a3a48b" target="_blank" class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
+  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
+    <img src="https://helios-i.mashable.com/imagery/articles/00zEnhbB6mXQs8x5yXw38bT/images-2.fit_lim.size_376x.png"
+         alt="ChatGPT logo"
+         class="w-8 h-8 rounded-full object-contain"
+         loading="lazy" />
+  </div>
+  <div>
+    <div class="font-medium text-gray-800 text-sm">Gemini</div>
+    <div class="text-xs text-gray-500">Headline: -5; Map: 5</div>
+  </div>
+</a>
+
+<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+<p class="text-sm text-gray-600" data-typed><strong>Headline credibility rating: Not Credible (-5)</strong><br><br>
+The headline is not credible because it makes a causal link between "a century of unprecedented man-made global warming" and the cold temperatures shown on the map, which is a fallacy. This is a common form of <strong>misinformation and cherry-picking bias</strong>, focusing on a single cold weather event while ignoring the long-term trend of global temperature increase. It also uses an emotional tone with the word "unprecedented." The map itself shows a specific point in time, December 22, 2022, and reflects typical winter weather patterns, not the overall climate trend. <em>(In-house knowledge)</em>
+<br><br>
+ <strong>Map credibility rating: Highly Credible (5)</strong><br><br>
+The map is highly credible. It is from Climate Reanalyzer, a well-known and respected data visualization tool produced by the Climate Change Institute at the University of Maine. The map clearly states its data source, "GFS 2m Temperature (°C)," and the date, "Thu, Dec 22, 2022," indicating it is a specific weather forecast snapshot, not a representation of long-term climate. The temperature scale is clearly labeled, allowing for accurate interpretation. (<strong>Reference: Climate Reanalyzer.org, URL:</strong><a href="https://climatereanalyzer.org/clim/t2_daily/" class="text-blue-600 underline"> https://climatereanalyzer.org/clim/t2_daily/</a>)</p>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+
+</div>
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+</template>
+
+<!-- template after p1 -->
+<template id="tpl-After_p1">
+<div id="page-afterp1">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+Greenland's Petermann Glacier has grown nearly ten miles since 2012, when the press hysterically announced the glacier's imminent demise. For some reason the press isn't talking about this.<br>
+#ClimateScam
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center gap-4">
+  <img
+    alt="Climate Change Map A"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/OIduwpl.png"
+  />
+  <img
+    alt="Climate Change Map B"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/BUyVXu1.png"
+  />
+</div>
+
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+<!-- template after p2 -->
+<template id="tpl-After_p2">
+<div id="page-afterp2">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+Say anything climate science:<br>
+
+- Today: NYTimes blames the polar vortex on warming Arctic and melting sea ice.<br>
+
+- 1978: NYTimes blames the polar vortex on global cooling and expanding Arctic ice.<br>
+
+Climate is a hoax.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center gap-4">
+  <img
+    alt="Climate Change Map A"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/6ReNBgH.jpeg"
+  />
+  <img
+    alt="Climate Change Map B"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/dC9KSCA.jpeg"
+  />
+</div>
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+<!-- template after p3 -->
+<template id="tpl-After_p3">
+<div id="page-afterp3">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Next Post
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+April 2023 much cooler than April 1981 in lower 48... despite 133% more manmade CO2. 🤔<br>
+
+Recall that the climate con is every emission warms the planet.<br>
+
+It's not a crisis. It's a hoax.<br>
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center gap-4">
+  <img
+    alt="Climate Change Map A"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/ekVLX1s.png"
+  />
+  <img
+    alt="Climate Change Map B"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/L1S8TAK.png"
+  />
+</div>
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+<!-- template after p4 -->
+<template id="tpl-After_p4">
+<div id="page-afterp4">
+
+<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
+
+
+<!-- Progress Section -->
+<div class="w-[280px] flex flex-col gap-4 mt-8">
+<div class="bg-white rounded-lg shadow-sm p-4">
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<div class="flex flex-col gap-2">
+<a class="block" data-readdy="true" href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/d5171b8d-e24b-4a55-b746-9d8b8280c213">
+<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
+Finish
+</div>
+</a>
+</div>
+</div>
+</div>
+
+
+<!-- Main Content -->
+<div class="flex-1 max-w-4xl pl-0">
+
+
+<!-- Section 1: Content -->
+<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+<i class="ri-user-3-line text-gray-600 text-xl"></i>
+</div>
+</div>
+<div class="relative mb-6" id="headline-container">
+<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
+On this date in 1988, 66.5% of the spatial area of the U.S. mainland was >90°F (32°C).<br>
+
+Today's “unprecedented climate-fueled heat dome” only managed to get 17% of the U.S. land area >90° at peak heating.<br>
+
+Our thermometer data doesn't lie, but journalists and academics do.
+</p>
+<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
+<div class="w-4 h-4 flex items-center justify-center">
+<i class="ri-file-copy-line text-sm"></i>
+</div>
+Copy
+</button>
+</div>
+<div class="map-container mt-4 flex justify-center gap-4">
+  <img
+    alt="Climate Change Map A"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/urfAO4a.jpeg"
+  />
+  <img
+    alt="Climate Change Map B"
+    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
+    src="https://i.imgur.com/Tt3hYUh.png"
+  />
+</div>
+
+</div>
+
+
+<!-- Section 2: Credibility Assessment -->
+<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+
+<!-- Text Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="text-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+
+</div>
+
+<!-- Map Credibility -->
+<div class="mb-4">
+<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
+<div class="mb-2">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
+<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+<div>
+<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
+<textarea
+  data-field="map-why"
+  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
+  placeholder="Write your answer here"
+  rows="2"></textarea>
+</div>
+</div>
+
+<!-- Agreement -->
+<div>
+<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
+<div class="mb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
+<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
+</div>
+<div class="relative">
+<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
+</div>
+<div class="flex justify-between text-xs text-gray-500 mt-1">
+<span>-5</span>
+<span>0</span>
+<span>5</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Section 4: Chatbot Sidebar -->
+</div>
+ Map Overlay
+<div class="map-overlay" id="map-overlay">
+<img alt="Enlarged Map" id="overlay-image" src=""/>
+</div>
+<script id="text-selection-script">
+document.addEventListener('DOMContentLoaded', function() {
+const headlineText = document.getElementById('headline-text');
+const copyButton = document.getElementById('copy-button');
+let selectedText = '';
+headlineText.addEventListener('mouseup', function() {
+const selection = window.getSelection();
+selectedText = selection.toString().trim();
+if (selectedText) {
+const range = selection.getRangeAt(0);
+const rect = range.getBoundingClientRect();
+const containerRect = headlineText.getBoundingClientRect();
+copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
+copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
+copyButton.classList.add('show');
+} else {
+copyButton.classList.remove('show');
+}
+});
+copyButton.addEventListener('click', function() {
+if (selectedText) {
+navigator.clipboard.writeText(selectedText).then(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+setTimeout(function() {
+copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+copyButton.classList.remove('show');
+}, 1500);
+});
+}
+});
+document.addEventListener('click', function(e) {
+if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
+copyButton.classList.remove('show');
+window.getSelection().removeAllRanges();
+}
+});
+});
+</script>
+<script id="map-interaction-script">
+document.addEventListener('DOMContentLoaded', function() {
+const mapContainers = document.querySelectorAll('.map-container');
+const mapOverlay = document.getElementById('map-overlay');
+const overlayImage = document.getElementById('overlay-image');
+mapContainers.forEach(container => {
+const img = container.querySelector('img');
+container.addEventListener('click', function() {
+overlayImage.src = img.src;
+mapOverlay.classList.add('show');
+});
+container.addEventListener('contextmenu', function(e) {
+e.preventDefault();
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = img.naturalWidth;
+canvas.height = img.naturalHeight;
+ctx.drawImage(img, 0, 0);
+canvas.toBlob(function(blob) {
+const item = new ClipboardItem({ 'image/png': blob });
+navigator.clipboard.write([item]);
+});
+});
+});
+mapOverlay.addEventListener('click', function() {
+mapOverlay.classList.remove('show');
+});
+});
+</script>
+<script id="slider-controls-script">
+document.addEventListener('DOMContentLoaded', function() {
+const textSlider = document.getElementById('text-slider');
+const mapSlider = document.getElementById('map-slider');
+const postSlider = document.getElementById('post-slider');
+const textValue = document.getElementById('text-value');
+const mapValue = document.getElementById('map-value');
+const postValue = document.getElementById('post-value');
+function updateSliderValue(slider, valueDisplay) {
+valueDisplay.textContent = slider.value;
+}
+textSlider.addEventListener('input', function() {
+updateSliderValue(textSlider, textValue);
+});
+mapSlider.addEventListener('input', function() {
+updateSliderValue(mapSlider, mapValue);
+});
+postSlider.addEventListener('input', function() {
+updateSliderValue(postSlider, postValue);
+});
+});
+</script>
+
+</div>
+<!-- Overlay element for enlarged maps -->
+<div class="map-overlay" id="map-overlay">
+  <img id="overlay-image" alt="Enlarged Map" src=""/>
+</div>
+
+</template>
+
+<template id="tpl-Results">
+<div id="page-results">
+
+<div class="w-full">
+<div class="bg-white shadow-sm border-b border-gray-200">
+<div class="px-8 py-6 flex justify-between items-center">
+<div>
+<h1 class="text-2xl font-bold text-gray-900">Results</h1>
+<p class="text-gray-600 mt-1">Experimental data collection</p>
+</div>
+<button class="bg-primary text-white px-6 py-3 !rounded-button whitespace-nowrap flex items-center gap-2 hover:bg-blue-600 transition-colors shadow-sm" id="downloadBtn">
+<div class="w-5 h-5 flex items-center justify-center">
+<i class="ri-download-line"></i>
+</div>
+Download CSV
+</button>
+</div>
+</div>
+<div class="p-8">
+<div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full min-w-max">
+<thead class="bg-gray-50 border-b border-gray-200">
+<tr>
+<th class="px-4 py-4 text-left text-sm font-semibold text-gray-900 sticky left-0 bg-gray-50 z-10 border-r border-gray-200">User ID</th>
+<th class="px-4 py-4 text-left text-sm font-semibold text-gray-900 min-w-48">Time Cost (s)</th>
+<th class="px-4 py-4 text-left text-sm font-semibold text-gray-900 min-w-32">Post</th>
+<th class="px-4 py-4 text-center text-sm font-semibold text-gray-900 min-w-32">Text Credibility</th>
+<th class="px-4 py-4 text-left text-sm font-semibold text-gray-900 min-w-48">Why?</th>
+<th class="px-4 py-4 text-center text-sm font-semibold text-gray-900 min-w-32">Map Credibility</th>
+<th class="px-4 py-4 text-left text-sm font-semibold text-gray-900 min-w-48">Why?</th>
+<th class="px-4 py-4 text-center text-sm font-semibold text-gray-900 min-w-32">Overall Rating</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200" id="resultsTable">
+</tbody>
+</table>
+</div>
+</div>
+
+
+</div>
+</div>
+
+</div>
+</template>
+
+
+
+<script type="module">
+const app = document.getElementById('app');
+
+const pages = {
+  'UserID': document.getElementById('tpl-UserID'),
+  'Before_p1': document.getElementById('tpl-Before_p1'),
+  'Before_p2': document.getElementById('tpl-Before_p2'),
+  'Before_p3': document.getElementById('tpl-Before_p3'),
+  'Before_p4': document.getElementById('tpl-Before_p4'),
+  'LLM_p1': document.getElementById('tpl-LLM_p1'),
+  'LLM_p2': document.getElementById('tpl-LLM_p2'),
+  'LLM_p3': document.getElementById('tpl-LLM_p3'),
+  'LLM_p4': document.getElementById('tpl-LLM_p4'),
+  'After_p1': document.getElementById('tpl-After_p1'),
+  'After_p2': document.getElementById('tpl-After_p2'),
+  'After_p3': document.getElementById('tpl-After_p3'),
+  'After_p4': document.getElementById('tpl-After_p4'),
+  'Results': document.getElementById('tpl-Results'),
+};
+
+
+
+
+/* ---- queue helpers ---- */
+function enqueuePending(obj){
+  try {
+    const arr = JSON.parse(sessionStorage.getItem('pendingResults') || '[]');
+    arr.push(obj);
+    sessionStorage.setItem('pendingResults', JSON.stringify(arr));
+  } catch (e) {
+    // 兜底：如果 JSON 解析失败，直接覆盖
+    sessionStorage.setItem('pendingResults', JSON.stringify([obj]));
+  }
+}
+
+function drainPendingIntoTable(){
+  const raw = sessionStorage.getItem('pendingResults');
+  if (!raw) return;
+  let arr = [];
+  try { arr = JSON.parse(raw) || []; } catch(e){ arr = []; }
+  arr.forEach(item => window.addResearchResult(item));
+  sessionStorage.removeItem('pendingResults');
+}
+
+
+/* ---------------- Results helpers (GLOBAL) ---------------- */
+const startTimes = {};
+window.startTimer = (postId) => { startTimes[postId] = performance.now(); };
+
+window.addResearchResult = (data) => {
+  const table = document.getElementById('resultsTable');
+  if (!table) return;
+
+  const userID = sessionStorage.getItem('userID') || '-';
+  const end = performance.now();
+  const startedAt = startTimes[data.post];
+  const timeCost = startedAt ? ((end - startedAt) / 1000).toFixed(2) : '-';
+
+  // 斑马色：示例对 LLM_p2 上灰，其它默认白
+  const zebra = data.post === 'LLM_p2' ? 'hover:bg-gray-50 bg-gray-50' : 'hover:bg-gray-50';
+  const stickyBg = data.post === 'LLM_p2' ? 'bg-gray-50' : 'bg-white';
+
+  const tr = document.createElement('tr');
+  tr.className = zebra;
+  tr.innerHTML = `
+    <td class="px-4 py-4 text-sm font-medium text-gray-900 sticky left-0 ${stickyBg} z-10 border-r border-gray-200">${userID}</td>
+    <td class="px-4 py-4 text-sm text-gray-600">${timeCost}</td>
+    <td class="px-4 py-4 text-sm text-gray-900">${data.post || '-'}</td>
+    <td class="px-4 py-4 text-sm text-gray-900 text-center">${data.headlineCredibility ?? '-'}</td>
+    <td class="px-4 py-4 text-sm text-gray-900">${data.textWhy ?? '-'}</td>
+    <td class="px-4 py-4 text-sm text-gray-900 text-center">${data.mapCredibility ?? '-'}</td>
+    <td class="px-4 py-4 text-sm text-gray-900">${data.mapWhy ?? '-'}</td>
+    <td class="px-4 py-4 text-sm text-gray-900 text-center">${data.overallRating ?? '-'}</td>
+  `;
+  table.appendChild(tr);
+
+  // 用完清理计时键，防止下次误用
+  delete startTimes[data.post];
+};
+
+
+function wireCsvDownload(root) {
+  const btn = root.querySelector('#downloadBtn');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const table = document.getElementById('resultsTable');
+    if (!table) return;
+
+    // 列标题用你想导出的字段名（这里沿用你现有的）
+    const headers = ['ID','Time Cost (s)','Post','Headline Credibility','Why?','Map Credibility','Why?','Agreement'];
+    let csv = headers.join(',') + '\n';
+
+    table.querySelectorAll('tr').forEach(tr => {
+      const tds = tr.querySelectorAll('td');
+      if (!tds.length) return;
+      const row = Array.from(tds).map(td => {
+        let c = td.textContent.trim();
+        if (/[",\n]/.test(c)) c = '"' + c.replace(/"/g,'""') + '"';
+        return c;
+      });
+      csv += row.join(',') + '\n';
+    });
+
+    const blob = new Blob([csv], { type:'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'research_results_' + new Date().toISOString().slice(0,10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }, { once:true }); // ← 确保只绑定一次，避免重复下载多次
+}
+
+
+/* ---------------- NEW: 通用的“收集并跳转”助手 ---------------- */
+function collectAndGo(pageRoot, key, selectors, goto){  // goto 可选
+  const get = sel => pageRoot.querySelector(sel);
+  const data = {
+    post: key,
+    headlineCredibility: get(selectors.headlineCredibility)?.value ?? '',
+    textWhy:         get(selectors.textWhy)?.value ?? '',
+    mapCredibility:  get(selectors.mapCredibility)?.value ?? '',
+    mapWhy:          get(selectors.mapWhy)?.value ?? '',
+    overallRating:   get(selectors.overallRating)?.value ?? ''
+  };
+  enqueuePending(data);
+  if (goto) showPage(goto);
+}
+
+
+/* ---------------- Mounting & page lifecycle ---------------- */
+function mountTemplate(tpl){
+  app.innerHTML = '';
+  const node = tpl.content.cloneNode(true);
+  app.appendChild(node);
+  bindNavigation(app);
+  afterMount(app);
+}
+
+function showPage(name){
+  const tpl = pages[name];
+  if(!tpl) return;
+  sessionStorage.setItem('currentPage', name);
+  mountTemplate(tpl);
+}
+
+/* ---------------- UI wiring helpers ---------------- */
+function wireSliders(root){
+  const pairs = [
+    ['#text-slider', '#text-value'],
+    ['#map-slider',  '#map-value'],
+    ['#post-slider', '#post-value'],
+  ];
+  pairs.forEach(([sid, vid]) => {
+    const s = root.querySelector(sid);
+    const v = root.querySelector(vid);
+    if (!s || !v) return;
+    const render = () => { v.textContent = s.value; };
+    render();
+    s.addEventListener('input', render);
+    s.addEventListener('change', render);
+  });
+}
+
+function attachCopyPopups(root){
+  root.querySelectorAll('#headline-container').forEach(container=>{
+    const textEl = container.querySelector('#headline-text');
+    const btn    = container.querySelector('#copy-button');
+    if(!textEl || !btn) return;
+
+    let selectedText = '';
+
+    textEl.addEventListener('mouseup', () => {
+      const sel = window.getSelection();
+      if (!sel || !sel.toString().trim() || !textEl.contains(sel.anchorNode)) {
+        btn.classList.remove('show');
+        return;
+      }
+      selectedText = sel.toString().trim();
+      const rect  = sel.getRangeAt(0).getBoundingClientRect();
+      const crect = container.getBoundingClientRect();
+      btn.style.left = (rect.left - crect.left + rect.width/2 - 30) + 'px';
+      btn.style.top  = (rect.top  - crect.top  - 40) + 'px';
+      btn.classList.add('show');
+    });
+
+    btn.addEventListener('click', () => {
+      if (!selectedText) return;
+      navigator.clipboard.writeText(selectedText).then(()=>{
+        btn.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
+        setTimeout(()=>{
+          btn.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
+          btn.classList.remove('show');
+        }, 1200);
+      });
+    });
+
+    document.addEventListener('click', (e)=>{
+      if (!container.contains(e.target) && !btn.contains(e.target)) {
+        btn.classList.remove('show');
+      }
+    });
+  });
+}
+
+function attachImageOverlay(root) {
+  // 优先使用当前页面的 overlay；没有再用全局那份
+  const overlay    = root.querySelector('#map-overlay') || document.getElementById('map-overlay');
+  const overlayImg = root.querySelector('#overlay-image') || document.getElementById('overlay-image');
+  if (!overlay || !overlayImg) return;
+
+  root.querySelectorAll('.map-container img').forEach(img => {
+    img.addEventListener('click', () => {
+      overlayImg.src = img.src;
+      overlay.classList.add('show');
+    });
+  });
+
+  overlay.addEventListener('click', () => overlay.classList.remove('show'), { once: false });
+}
+
+
+/* ---------------- Navigation wiring ---------------- */
+function bindNavigation(root){
+  // 通用 data-goto
+  root.querySelectorAll('[data-goto]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = btn.getAttribute('data-goto');
+      showPage(target);
+    });
+  });
+
+  // UserID: Continue -> Before_p1 (save ID + start timer)
+  const userIdRoot = root.querySelector('#page-userid');
+  if (userIdRoot){
+    userIdRoot.querySelectorAll('button, a').forEach(el=>{
+      if(!el.dataset.goto && /continue/i.test(el.textContent)){
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          const input = userIdRoot.querySelector('#accessId');
+          const uid = (input?.value || '').trim();
+          sessionStorage.setItem('userID', uid);
+          updateResultsUserIds(document);
+          showPage('Before_p1');
+          window.startTimer?.('Before_p1');   // 计时 Before_p1
+        });
+      }
+    });
+  }
+
+  /* ===== BEFORE 链路：p1 -> p2 -> p3 -> p4 -> LLM_p1 ===== */
+  // Before_p1 -> Before_p2
+  const beforeP1 = root.querySelector('#page-beforep1');
+  if (beforeP1){
+    beforeP1.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent) || el.dataset.goto === 'Before_p2') {
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          collectAndGo(beforeP1, 'Before_p1', {
+            headlineCredibility: '#text-slider',
+            textWhy:         'textarea[data-field="text-why"]',
+            mapCredibility:  '#map-slider',
+            mapWhy:          'textarea[data-field="map-why"]',
+            overallRating:   '#post-slider'
+          }, 'Before_p2');
+          window.startTimer?.('Before_p2');
+        });
+      }
+    });
+  }
+
+  // Before_p2 -> Before_p3
+  const beforeP2 = root.querySelector('#page-beforep2');
+  if (beforeP2){
+    beforeP2.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent) || el.dataset.goto === 'Before_p3') {
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          collectAndGo(beforeP2, 'Before_p2', {
+            headlineCredibility: '#text-slider',
+            textWhy:         'textarea[data-field="text-why"]',
+            mapCredibility:  '#map-slider',
+            mapWhy:          'textarea[data-field="map-why"]',
+            overallRating:   '#post-slider'
+          }, 'Before_p3');
+          window.startTimer?.('Before_p3');
+        });
+      }
+    });
+  }
+
+  // Before_p3 -> Before_p4
+  const beforeP3 = root.querySelector('#page-beforep3');
+  if (beforeP3){
+    beforeP3.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent) || el.dataset.goto === 'Before_p4') {
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          collectAndGo(beforeP3, 'Before_p3', {
+            headlineCredibility: '#text-slider',
+            textWhy:         'textarea[data-field="text-why"]',
+            mapCredibility:  '#map-slider',
+            mapWhy:          'textarea[data-field="map-why"]',
+            overallRating:   '#post-slider'
+          }, 'Before_p4');
+          window.startTimer?.('Before_p4');
+        });
+      }
+    });
+  }
+
+  // Before_p4 -> LLM_p1
+  const beforeP4 = root.querySelector('#page-beforep4');
+  if (beforeP4){
+    beforeP4.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent) || el.dataset.goto === 'LLM_p1') {
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          collectAndGo(beforeP4, 'Before_p4', {
+            headlineCredibility: '#text-slider',
+            textWhy:         'textarea[data-field="text-why"]',
+            mapCredibility:  '#map-slider',
+            mapWhy:          'textarea[data-field="map-why"]',
+            overallRating:   '#post-slider'
+          }, 'LLM_p1');
+          window.startTimer?.('LLM_p1');
+        });
+      }
+    });
+  }
+
+  /* ===== LLM 链路：LLM_p1 -> p2 -> p3 -> p4 -> Results ===== */
+  // LLM_p1 -> LLM_p2
+  const llmP1 = root.querySelector('#page-llmp1');
+  if (llmP1){
+    llmP1.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent) || el.dataset.goto === 'LLM_p2') {
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          collectAndGo(llmP1, 'LLM_p1', {
+            headlineCredibility: '#text-slider',
+            textWhy:         'textarea[data-field="text-why"]',
+            mapCredibility:  '#map-slider',
+            mapWhy:          'textarea[data-field="map-why"]',
+            overallRating:   '#post-slider'
+          }, 'LLM_p2');
+          window.startTimer?.('LLM_p2');
+        });
+      }
+    });
+  }
+
+  // LLM_p2 -> LLM_p3
+  const llmP2 = root.querySelector('#page-llmp2');
+  if (llmP2){
+    llmP2.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent) || el.dataset.goto === 'LLM_p3') {
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          collectAndGo(llmP2, 'LLM_p2', {
+            headlineCredibility: '#text-slider',
+            textWhy:         'textarea[data-field="text-why"]',
+            mapCredibility:  '#map-slider',
+            mapWhy:          'textarea[data-field="map-why"]',
+            overallRating:   '#post-slider'
+          }, 'LLM_p3');
+          window.startTimer?.('LLM_p3');
+        });
+      }
+    });
+  }
+
+  // LLM_p3 -> LLM_p4
+  const llmP3 = root.querySelector('#page-llmp3');
+  if (llmP3){
+    llmP3.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent) || el.dataset.goto === 'LLM_p4') {
+        el.addEventListener('click', (ev)=>{
+          ev.preventDefault?.();
+          collectAndGo(llmP3, 'LLM_p3', {
+            headlineCredibility: '#text-slider',
+            textWhy:         'textarea[data-field="text-why"]',
+            mapCredibility:  '#map-slider',
+            mapWhy:          'textarea[data-field="map-why"]',
+            overallRating:   '#post-slider'
+          }, 'LLM_p4');
+          window.startTimer?.('LLM_p4');
+        });
+      }
+    });
+  }
+
+// LLM_p4 -> After_p1
+const llmP4 = root.querySelector('#page-llmp4');
+if (llmP4){
+  llmP4.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent)
+        || el.dataset.goto === 'After_p1') {
+      el.addEventListener('click', (ev)=>{
+        ev.preventDefault?.();
+        collectAndGo(llmP4, 'LLM_p4', {
+          headlineCredibility: '#text-slider',
+          textWhy:         'textarea[data-field="text-why"]',
+          mapCredibility:  '#map-slider',
+          mapWhy:          'textarea[data-field="map-why"]',
+          overallRating:   '#post-slider'
+        }, 'After_p1');         // 跳 After_p1
+        window.startTimer?.('After_p1'); // 开始计时 After_p1
+      });
+    }
+  });
+}
+
+// After_p1 -> After_p2
+const afterP1 = root.querySelector('#page-afterp1');
+if (afterP1){
+  afterP1.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent)
+        || el.dataset.goto === 'After_p2') {
+      el.addEventListener('click', (ev)=>{
+        ev.preventDefault?.();
+        collectAndGo(afterP1, 'After_p1', {
+          headlineCredibility: '#text-slider',
+          textWhy:         'textarea[data-field="text-why"]',
+          mapCredibility:  '#map-slider',
+          mapWhy:          'textarea[data-field="map-why"]',
+          overallRating:   '#post-slider'
+        }, 'After_p2');
+        window.startTimer?.('After_p2');
+      });
+    }
+  });
+}
+
+// After_p2 -> After_p3
+const afterP2 = root.querySelector('#page-afterp2');
+if (afterP2){
+  afterP2.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent)
+        || el.dataset.goto === 'After_p3') {
+      el.addEventListener('click', (ev)=>{
+        ev.preventDefault?.();
+        collectAndGo(afterP2, 'After_p2', {
+          headlineCredibility: '#text-slider',
+          textWhy:         'textarea[data-field="text-why"]',
+          mapCredibility:  '#map-slider',
+          mapWhy:          'textarea[data-field="map-why"]',
+          overallRating:   '#post-slider'
+        }, 'After_p3');
+        window.startTimer?.('After_p3');
+      });
+    }
+  });
+}
+
+// After_p3 -> After_p4
+const afterP3 = root.querySelector('#page-afterp3');
+if (afterP3){
+  afterP3.querySelectorAll('a,button').forEach(el=>{
+if (/next\s+post/i.test(el.textContent)
+        || el.dataset.goto === 'After_p4') {
+      el.addEventListener('click', (ev)=>{
+        ev.preventDefault?.();
+        collectAndGo(afterP3, 'After_p3', {
+          headlineCredibility: '#text-slider',
+          textWhy:         'textarea[data-field="text-why"]',
+          mapCredibility:  '#map-slider',
+          mapWhy:          'textarea[data-field="map-why"]',
+          overallRating:   '#post-slider'
+        }, 'After_p4');
+        window.startTimer?.('After_p4');
+      });
+    }
+  });
+}
+
+// After_p4 -> Results
+const afterP4 = root.querySelector('#page-afterp4');
+if (afterP4){
+  afterP4.querySelectorAll('a,button').forEach(el=>{
+if (/Finish/i.test(el.textContent)
+        || el.dataset.finish === 'results'
+        || el.dataset.goto === 'Results') {
+      el.addEventListener('click', (ev)=>{
+        ev.preventDefault?.();
+        collectAndGo(afterP4, 'After_p4', {
+          headlineCredibility: '#text-slider',
+          textWhy:         'textarea[data-field="text-why"]',
+          mapCredibility:  '#map-slider',
+          mapWhy:          'textarea[data-field="map-why"]',
+          overallRating:   '#post-slider'
+        }, 'Results');
+        // 最后一页不再 startTimer
+      });
+    }
+  });
+}
+
+
+
+}
+
+
+/* ---------------- Misc helpers ---------------- */
+function updateResultsUserIds(root = document) {
+  const uid = sessionStorage.getItem('userID') || '';
+  if (!uid) return;
+
+  root.querySelectorAll('#resultsTable tr td:first-child').forEach(td => {
+    const t = (td.textContent || '').trim();
+    if (t === '${userID}' || t === '-' || t === '') td.textContent = uid;
+  });
+
+  const resultsRoot = root.querySelector('#page-results');
+  if (resultsRoot) {
+    resultsRoot.querySelectorAll('*').forEach(n => {
+      if (n.childNodes?.length === 1 && n.childNodes[0].nodeType === 3) {
+        const s = n.textContent;
+        if (s.includes('${userID}')) n.textContent = s.replaceAll('${userID}', uid);
+      }
+    });
+  }
+}
+
+// 让侧边栏聊天机器人弹卡显示“逐字打字”效果
+function attachChatbotPopupTyping(root){
+  const TOTAL_MS = 5000;   // 整段时长
+  const MIN_INTERVAL = 12; // 每字符最短间隔
+  const PRE_DELAY = 250;   // 开始前小延迟
+
+  root.querySelectorAll('.chatbot-item').forEach(item=>{
+    const popup = item.querySelector('.chatbot-popup');
+    if(!popup) return;
+
+    const p = popup.querySelector('[data-typed]') || popup.querySelector('p');
+    if(!p) return;
+
+    // 取原始富文本 HTML
+    const fullHTML = (p.innerHTML || '').trim();
+    p.dataset.fullhtml = fullHTML;
+
+    let delayTimer = null, typeTimer = null;
+
+    function start(){
+      clearTimeout(delayTimer); clearInterval(typeTimer);
+      p.innerHTML = '';
+      p.classList.add('typing-caret');
+
+      delayTimer = setTimeout(()=>{
+        // 1) 用 <template> 解析原始 HTML，得到一个“源 fragment”
+        const tpl = document.createElement('template');
+        tpl.innerHTML = p.dataset.fullhtml || '';
+        const srcFrag = tpl.content;
+
+        // 2) 克隆一份“目标 fragment”，并把里面所有文本节点清空
+        const dstFrag = srcFrag.cloneNode(true);
+
+        // 同步遍历两棵树，收集文本节点对 (srcText, dstText)
+        const srcWalker = document.createTreeWalker(srcFrag, NodeFilter.SHOW_TEXT, null);
+        const dstWalker = document.createTreeWalker(dstFrag, NodeFilter.SHOW_TEXT, null);
+        const pairs = [];
+        let s, d, totalChars = 0;
+        while ((s = srcWalker.nextNode()) && (d = dstWalker.nextNode())){
+          const val = s.nodeValue;
+          pairs.push({src: val, dst: d});
+          d.nodeValue = '';               // 清空目标里的文本，稍后逐字填
+          totalChars += val.length;
+        }
+
+        // 把“空文本”的结构先挂到页面上（标签结构 & 样式会立即生效）
+        p.appendChild(dstFrag);
+
+        // 3) 按字符推进，逐步把源文本写入到对应的目标文本节点里
+        const interval = Math.max(MIN_INTERVAL, Math.floor(TOTAL_MS / Math.max(1,totalChars)));
+        let i = 0, j = 0;
+        typeTimer = setInterval(()=>{
+          if (i >= pairs.length){
+            clearInterval(typeTimer);
+            p.classList.remove('typing-caret');
+            return;
+          }
+          const {src, dst} = pairs[i];
+          dst.nodeValue = src.slice(0, j+1);
+          j++;
+          if (j >= src.length){
+            i++; j = 0;
+          }
+        }, interval);
+      }, PRE_DELAY);
+    }
+
+    function reset(){
+      clearTimeout(delayTimer); clearInterval(typeTimer);
+      p.innerHTML = '';
+      p.classList.remove('typing-caret');
+    }
+
+    item.addEventListener('mouseenter', start);
+    item.addEventListener('mouseleave', reset);
+    // 如果想改为点击触发，把 mouseenter 改成 click 即可
+  });
+}
+
+
+
+// 解决弹窗被裁剪：转为 fixed + 边界自适应
+function attachChatbotPopupFixed(root){
+  root.querySelectorAll('.chatbot-item').forEach(item=>{
+    const trigger = item.querySelector('.flex.items-center.p-2');
+    const popup   = item.querySelector('.js-chatbot-popup') || item.querySelector('.chatbot-popup');
+    if(!trigger || !popup) return;
+
+    popup.style.position = 'fixed';
+
+    const show = ()=>{
+      popup.style.visibility = 'hidden';
+      popup.style.opacity = '0';
+      popup.style.transform = 'translateY(4px)';
+      popup.style.left = '-9999px';
+      popup.style.top  = '-9999px';
+      popup.style.display = 'block';
+
+      const r = trigger.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const ph = popup.offsetHeight;
+      const pw = popup.offsetWidth;
+
+      let top  = r.top;
+      let left = r.right + 16;
+
+      if (left + pw > vw - 8) {
+        left = Math.max(8, r.left - pw - 16);
+      }
+
+      const vh = window.innerHeight;
+      if (top + ph > vh - 8) {
+        top = Math.max(8, vh - ph - 8);
+      }
+
+      popup.style.top  = `${top}px`;
+      popup.style.left = `${left}px`;
+      popup.style.visibility = 'visible';
+      requestAnimationFrame(()=>{
+        popup.style.opacity = '1';
+        popup.style.transform = 'translateY(0)';
+      });
+    };
+
+    const hide = ()=>{
+      popup.style.opacity = '0';
+      popup.style.transform = 'translateY(4px)';
+      setTimeout(()=>{
+        popup.style.visibility = 'hidden';
+        popup.style.left = '-9999px';
+        popup.style.top  = '-9999px';
+      }, 180);
+    };
+
+    item.addEventListener('mouseenter', show);
+    item.addEventListener('mouseleave', hide);
+    window.addEventListener('scroll', hide, { passive:true });
+    window.addEventListener('resize', hide);
+  });
+}
+
+/* ---------------- After mount ---------------- */
+function afterMount(root){
+  // Save userID on Continue as a backup
+  const uidInput = root.querySelector('#page-userid input[type="text"]');
+  if(uidInput){
+    root.querySelectorAll('#page-userid button, #page-userid a').forEach(el=>{
+      if(/continue/i.test(el.textContent)){
+        el.addEventListener('click', ()=> sessionStorage.setItem('userID', uidInput.value || ''));
+      }
+    });
+  }
+
+  // When Results is shown, wire CSV + fill user IDs
+const resultsRoot = root.querySelector('#page-results');
+if (resultsRoot) {
+  updateResultsUserIds(root);
+  wireCsvDownload(root);
+
+  // ⬇️ 新：一次性把 pendingResults 队列落表
+  drainPendingIntoTable();
+}
+
+
+// On content-like pages, wire by feature detection
+if (root.querySelector('#headline-container')) {
+  attachCopyPopups(root);
+}
+if (root.querySelector('.map-container img')) {
+  attachImageOverlay(root);
+}
+if (root.querySelector('#text-slider') || root.querySelector('#map-slider') || root.querySelector('#post-slider')) {
+  wireSliders(root);
+}
+
+
+  // 侧栏弹窗：定位修正 + 逐字打字
+  if (root.querySelector('.chatbot-item')) {
+    attachChatbotPopupFixed(root);
+    attachChatbotPopupTyping(root);
+  }
+}
+
+/* ---------------- Boot ---------------- */
+showPage(sessionStorage.getItem('currentPage') || 'UserID');
+</script>
+
+
+
+</body>
+</html>
