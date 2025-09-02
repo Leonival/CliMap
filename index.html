@@ -125,7 +125,6 @@ tailwind.config={theme:{extend:{colors:{primary:'#3b82f6',secondary:'#10b981'},b
   <!-- add spacing here -->
   <a
     data-readdy="true"
-    href="https://readdy.ai/home/72942811-3f53-4705-8fa2-d979bdff7c03/79387a31-e6ab-4668-89d6-7c5b79e1bcca"
     class="mt-4 block"
   >
     <button
@@ -158,245 +157,245 @@ e.target.value = e.target.value.replace(/[^0-9]/g, '');
 
 
 
-<!-- template before p1 -->
-<template id="tpl-Before_p1">
-<div id="page-beforep1">
+<!--&lt;!&ndash; template before p1 &ndash;&gt;-->
+<!--<template id="tpl-Before_p1">-->
+<!--<div id="page-beforep1">-->
 
-<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
-
-
-<!-- Progress Section -->
-<div class="w-[280px] flex flex-col gap-4 mt-8">
-<div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress 1/12</h3>
-<div class="flex flex-col gap-2">
-<a class="block" data-readdy="true" data-goto="Before_p2">
-<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 1/12
-</div>
-</a>
-</div>
-</div>
-</div>
+<!--<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">-->
 
 
-<!-- Main Content -->
-<div class="flex-1 max-w-4xl pl-0">
+<!--&lt;!&ndash; Progress Section &ndash;&gt;-->
+<!--<div class="w-[280px] flex flex-col gap-4 mt-8">-->
+<!--<div class="bg-white rounded-lg shadow-sm p-4">-->
+<!--<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress 1/12</h3>-->
+<!--<div class="flex flex-col gap-2">-->
+<!--<a class="block" data-readdy="true" data-goto="Before_p2">-->
+<!--<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">-->
+<!--Next Post -->
+<!--</div>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
 
-<!-- Section 1: Content -->
-<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
-<div class="flex items-center gap-3 mb-6">
-<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-<i class="ri-user-3-line text-gray-600 text-xl"></i>
-</div>
-</div>
-<div class="relative mb-6" id="headline-container">
-<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
-Scientists say this map represents the US in 30 years if we don't reverse climate change.
-</p>
-<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
-<div class="w-4 h-4 flex items-center justify-center">
-<i class="ri-file-copy-line text-sm"></i>
-</div>
-Copy
-</button>
-</div>
-<div class="map-container mt-4 flex justify-center">
-  <img
-    alt="Climate Change Map"
-    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
-    src="https://i.imgur.com/PwCVi8I.jpeg"
-  />
-</div>
-
-</div>
+<!--&lt;!&ndash; Main Content &ndash;&gt;-->
+<!--<div class="flex-1 max-w-4xl pl-0">-->
 
 
-<!-- Section 2: Credibility Assessment -->
-<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
+<!--&lt;!&ndash; Section 1: Content &ndash;&gt;-->
+<!--<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">-->
+<!--<div class="flex items-center gap-3 mb-6">-->
+<!--<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">-->
+<!--<i class="ri-user-3-line text-gray-600 text-xl"></i>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="relative mb-6" id="headline-container">-->
+<!--<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">-->
+<!--Scientists say this map represents the US in 30 years if we don't reverse climate change.-->
+<!--</p>-->
+<!--<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">-->
+<!--<div class="w-4 h-4 flex items-center justify-center">-->
+<!--<i class="ri-file-copy-line text-sm"></i>-->
+<!--</div>-->
+<!--Copy-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="map-container mt-4 flex justify-center">-->
+<!--  <img-->
+<!--    alt="Climate Change Map"-->
+<!--    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"-->
+<!--    src="https://i.imgur.com/PwCVi8I.jpeg"-->
+<!--  />-->
+<!--</div>-->
 
-<!-- Text Credibility -->
-<div class="mb-4">
-<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
-<div class="mb-2">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
-<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-
-<div>
-<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
-<textarea
-  data-field="text-why"
-  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
-  placeholder="Write your answer here"
-  rows="2"></textarea>
-</div>
-
-</div>
-
-<!-- Map Credibility -->
-<div class="mb-4">
-<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
-<div class="mb-2">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
-<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
-<textarea
-  data-field="map-why"
-  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
-  placeholder="Write your answer here"
-  rows="2"></textarea>
-</div>
-</div>
-
-<!-- Agreement -->
-<div>
-<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
-<div class="mb-4">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
-<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-</div>
-</div>
-</div>
+<!--</div>-->
 
 
-<!-- Section 4: Chatbot Sidebar -->
-</div>
+<!--&lt;!&ndash; Section 2: Credibility Assessment &ndash;&gt;-->
+<!--<div class="bg-white rounded-lg shadow-sm p-4 pl-6">-->
 
-<div class="map-overlay" id="map-overlay">
-<img alt="Enlarged Map" id="overlay-image" src=""/>
-</div>
-<script id="text-selection-script">
-document.addEventListener('DOMContentLoaded', function() {
-const headlineText = document.getElementById('headline-text');
-const copyButton = document.getElementById('copy-button');
-let selectedText = '';
-headlineText.addEventListener('mouseup', function() {
-const selection = window.getSelection();
-selectedText = selection.toString().trim();
-if (selectedText) {
-const range = selection.getRangeAt(0);
-const rect = range.getBoundingClientRect();
-const containerRect = headlineText.getBoundingClientRect();
-copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
-copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
-copyButton.classList.add('show');
-} else {
-copyButton.classList.remove('show');
-}
-});
-copyButton.addEventListener('click', function() {
-if (selectedText) {
-navigator.clipboard.writeText(selectedText).then(function() {
-copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
-setTimeout(function() {
-copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
-copyButton.classList.remove('show');
-}, 1500);
-});
-}
-});
-document.addEventListener('click', function(e) {
-if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
-copyButton.classList.remove('show');
-window.getSelection().removeAllRanges();
-}
-});
-});
-</script>
-<script id="map-interaction-script">
-document.addEventListener('DOMContentLoaded', function() {
-const mapContainers = document.querySelectorAll('.map-container');
-const mapOverlay = document.getElementById('map-overlay');
-const overlayImage = document.getElementById('overlay-image');
-mapContainers.forEach(container => {
-const img = container.querySelector('img');
-container.addEventListener('click', function() {
-overlayImage.src = img.src;
-mapOverlay.classList.add('show');
-});
-container.addEventListener('contextmenu', function(e) {
-e.preventDefault();
-const canvas = document.createElement('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = img.naturalWidth;
-canvas.height = img.naturalHeight;
-ctx.drawImage(img, 0, 0);
-canvas.toBlob(function(blob) {
-const item = new ClipboardItem({ 'image/png': blob });
-navigator.clipboard.write([item]);
-});
-});
-});
-mapOverlay.addEventListener('click', function() {
-mapOverlay.classList.remove('show');
-});
-});
-</script>
-<script id="slider-controls-script">
-document.addEventListener('DOMContentLoaded', function() {
-const textSlider = document.getElementById('text-slider');
-const mapSlider = document.getElementById('map-slider');
-const postSlider = document.getElementById('post-slider');
-const textValue = document.getElementById('text-value');
-const mapValue = document.getElementById('map-value');
-const postValue = document.getElementById('post-value');
-function updateSliderValue(slider, valueDisplay) {
-valueDisplay.textContent = slider.value;
-}
-textSlider.addEventListener('input', function() {
-updateSliderValue(textSlider, textValue);
-});
-mapSlider.addEventListener('input', function() {
-updateSliderValue(mapSlider, mapValue);
-});
-postSlider.addEventListener('input', function() {
-updateSliderValue(postSlider, postValue);
-});
-});
-</script>
+<!--&lt;!&ndash; Text Credibility &ndash;&gt;-->
+<!--<div class="mb-4">-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>-->
+<!--<div class="mb-2">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="text-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
 
-</div>
-<!-- Overlay element for enlarged maps -->
-<div class="map-overlay" id="map-overlay">
-  <img id="overlay-image" alt="Enlarged Map" src=""/>
-</div>
+<!--<div>-->
+<!--<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>-->
+<!--<textarea-->
+<!--  data-field="text-why"-->
+<!--  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"-->
+<!--  placeholder="Write your answer here"-->
+<!--  rows="2"></textarea>-->
+<!--</div>-->
 
-</template>
+<!--</div>-->
+
+<!--&lt;!&ndash; Map Credibility &ndash;&gt;-->
+<!--<div class="mb-4">-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>-->
+<!--<div class="mb-2">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="map-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>-->
+<!--<textarea-->
+<!--  data-field="map-why"-->
+<!--  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"-->
+<!--  placeholder="Write your answer here"-->
+<!--  rows="2"></textarea>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Agreement &ndash;&gt;-->
+<!--<div>-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>-->
+<!--<div class="mb-4">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="post-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash; Section 4: Chatbot Sidebar &ndash;&gt;-->
+<!--</div>-->
+
+<!--<div class="map-overlay" id="map-overlay">-->
+<!--<img alt="Enlarged Map" id="overlay-image" src=""/>-->
+<!--</div>-->
+<!--<script id="text-selection-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const headlineText = document.getElementById('headline-text');-->
+<!--const copyButton = document.getElementById('copy-button');-->
+<!--let selectedText = '';-->
+<!--headlineText.addEventListener('mouseup', function() {-->
+<!--const selection = window.getSelection();-->
+<!--selectedText = selection.toString().trim();-->
+<!--if (selectedText) {-->
+<!--const range = selection.getRangeAt(0);-->
+<!--const rect = range.getBoundingClientRect();-->
+<!--const containerRect = headlineText.getBoundingClientRect();-->
+<!--copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';-->
+<!--copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';-->
+<!--copyButton.classList.add('show');-->
+<!--} else {-->
+<!--copyButton.classList.remove('show');-->
+<!--}-->
+<!--});-->
+<!--copyButton.addEventListener('click', function() {-->
+<!--if (selectedText) {-->
+<!--navigator.clipboard.writeText(selectedText).then(function() {-->
+<!--copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';-->
+<!--setTimeout(function() {-->
+<!--copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';-->
+<!--copyButton.classList.remove('show');-->
+<!--}, 1500);-->
+<!--});-->
+<!--}-->
+<!--});-->
+<!--document.addEventListener('click', function(e) {-->
+<!--if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {-->
+<!--copyButton.classList.remove('show');-->
+<!--window.getSelection().removeAllRanges();-->
+<!--}-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+<!--<script id="map-interaction-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const mapContainers = document.querySelectorAll('.map-container');-->
+<!--const mapOverlay = document.getElementById('map-overlay');-->
+<!--const overlayImage = document.getElementById('overlay-image');-->
+<!--mapContainers.forEach(container => {-->
+<!--const img = container.querySelector('img');-->
+<!--container.addEventListener('click', function() {-->
+<!--overlayImage.src = img.src;-->
+<!--mapOverlay.classList.add('show');-->
+<!--});-->
+<!--container.addEventListener('contextmenu', function(e) {-->
+<!--e.preventDefault();-->
+<!--const canvas = document.createElement('canvas');-->
+<!--const ctx = canvas.getContext('2d');-->
+<!--canvas.width = img.naturalWidth;-->
+<!--canvas.height = img.naturalHeight;-->
+<!--ctx.drawImage(img, 0, 0);-->
+<!--canvas.toBlob(function(blob) {-->
+<!--const item = new ClipboardItem({ 'image/png': blob });-->
+<!--navigator.clipboard.write([item]);-->
+<!--});-->
+<!--});-->
+<!--});-->
+<!--mapOverlay.addEventListener('click', function() {-->
+<!--mapOverlay.classList.remove('show');-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+<!--<script id="slider-controls-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const textSlider = document.getElementById('text-slider');-->
+<!--const mapSlider = document.getElementById('map-slider');-->
+<!--const postSlider = document.getElementById('post-slider');-->
+<!--const textValue = document.getElementById('text-value');-->
+<!--const mapValue = document.getElementById('map-value');-->
+<!--const postValue = document.getElementById('post-value');-->
+<!--function updateSliderValue(slider, valueDisplay) {-->
+<!--valueDisplay.textContent = slider.value;-->
+<!--}-->
+<!--textSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(textSlider, textValue);-->
+<!--});-->
+<!--mapSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(mapSlider, mapValue);-->
+<!--});-->
+<!--postSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(postSlider, postValue);-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+
+<!--</div>-->
+<!--&lt;!&ndash; Overlay element for enlarged maps &ndash;&gt;-->
+<!--<div class="map-overlay" id="map-overlay">-->
+<!--  <img id="overlay-image" alt="Enlarged Map" src=""/>-->
+<!--</div>-->
+
+<!--</template>-->
 
 <!-- template before p2 -->
 <template id="tpl-Before_p2">
@@ -408,11 +407,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  2/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  1/9</h3>
 <div class="flex flex-col gap-2">
 <a class="block" data-readdy="true" data-goto="Before_p3">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 2/12
+Next Post
 </div>
 </a>
 </div>
@@ -648,11 +647,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  3/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  2/9</h3>
 <div class="flex flex-col gap-2">
 <a class="block" data-readdy="true" data-goto="Before_p4">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 3/12
+Next Post
 </div>
 </a>
 </div>
@@ -888,11 +887,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  4/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  3/9</h3>
 <div class="flex flex-col gap-2">
-<a class="block" data-readdy="true" data-goto="LLM_p1">
+<a class="block" data-readdy="true" data-goto="Before_p4">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 4/12
+Next Post
 </div>
 </a>
 </div>
@@ -1120,306 +1119,306 @@ updateSliderValue(postSlider, postValue);
 </template>
 
 
-<template id="tpl-LLM_p1">
-<div id="page-llmp1">
+<!--<template id="tpl-LLM_p1">-->
+<!--<div id="page-llmp1">-->
 
-<div class="flex min-h-screen justify-center gap-4 px-8 ml-12">
-<!-- Progress Section -->
-<div class="w-[280px] flex flex-col gap-4 mt-8">
-<div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  5/12</h3>
-<div class="flex flex-col gap-2">
-<a class="block" data-readdy="true" data-goto="LLM_p2">
-<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 5/12
-</div>
-</a>
-</div>
-</div>
-</div>
-
-
-<!-- Main Content -->
-<div class="flex-1 max-w-4xl">
-<!-- Section 1: Content -->
-<div class="bg-white rounded-lg shadow-sm p-8 mb-2 mt-8">
-<div class="flex items-center gap-3 mb-6">
-<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-<i class="ri-user-3-line text-gray-600 text-xl"></i>
-</div>
-</div>
-<div class="relative mb-6" id="headline-container">
-<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
-'Sinking' Pacific nation is getting bigger. Examined changes in the geography of Tuvalu’s nine atolls and 101 reef islands between 1971 and 2014, using aerial photographs and satellite imagery. Over that period, eight of the atolls and almost three-quarters of the islands grew.
-</p>
-<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
-<div class="w-4 h-4 flex items-center justify-center">
-<i class="ri-file-copy-line text-sm"></i>
-</div>
-Copy
-</button>
-</div>
-
-<div class="map-container mt-4 flex justify-center">
-  <img
-    alt="Climate Change Map"
-    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"
-    src="https://i.imgur.com/GBk7l4F.png"
-  />
-</div>
+<!--<div class="flex min-h-screen justify-center gap-4 px-8 ml-12">-->
+<!--&lt;!&ndash; Progress Section &ndash;&gt;-->
+<!--<div class="w-[280px] flex flex-col gap-4 mt-8">-->
+<!--<div class="bg-white rounded-lg shadow-sm p-4">-->
+<!--<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  5/12</h3>-->
+<!--<div class="flex flex-col gap-2">-->
+<!--<a class="block" data-readdy="true" data-goto="LLM_p2">-->
+<!--<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">-->
+<!--Next Post-->
+<!--</div>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
 
-</div>
-<!-- Section 2: Credibility Assessment -->
-<div class="bg-white rounded-lg shadow-sm p-4">
-<!-- Text Credibility -->
-<div class="mb-4">
-<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
-<div class="mb-2">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
-<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
-<textarea
-  data-field="text-why"
-  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
-  placeholder="Write your answer here"
-  rows="2"></textarea>
-</div>
-</div>
-<!-- Map Credibility -->
-<div class="mb-4">
-<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
-<div class="mb-2">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
-<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
-<textarea
-  data-field="map-why"
-  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
-  placeholder="Write your answer here"
-  rows="2"></textarea>
-</div>
-</div>
-<!-- Agreement -->
-<div>
-<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
-<div class="mb-4">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
-<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-</div>
-</div>
-</div>
+<!--&lt;!&ndash; Main Content &ndash;&gt;-->
+<!--<div class="flex-1 max-w-4xl">-->
+<!--&lt;!&ndash; Section 1: Content &ndash;&gt;-->
+<!--<div class="bg-white rounded-lg shadow-sm p-8 mb-2 mt-8">-->
+<!--<div class="flex items-center gap-3 mb-6">-->
+<!--<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">-->
+<!--<i class="ri-user-3-line text-gray-600 text-xl"></i>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="relative mb-6" id="headline-container">-->
+<!--<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">-->
+<!--'Sinking' Pacific nation is getting bigger. Examined changes in the geography of Tuvalu’s nine atolls and 101 reef islands between 1971 and 2014, using aerial photographs and satellite imagery. Over that period, eight of the atolls and almost three-quarters of the islands grew.-->
+<!--</p>-->
+<!--<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">-->
+<!--<div class="w-4 h-4 flex items-center justify-center">-->
+<!--<i class="ri-file-copy-line text-sm"></i>-->
+<!--</div>-->
+<!--Copy-->
+<!--</button>-->
+<!--</div>-->
+
+<!--<div class="map-container mt-4 flex justify-center">-->
+<!--  <img-->
+<!--    alt="Climate Change Map"-->
+<!--    class="w-[700px] h-auto object-contain rounded-lg border border-gray-200"-->
+<!--    src="https://i.imgur.com/GBk7l4F.png"-->
+<!--  />-->
+<!--</div>-->
 
 
-<!-- Section 4: Chatbot Sidebar -->
-<div class="w-[500px] bg-transparent p-6 overflow-y-auto overflow-x-visible sticky top-4 h-[calc(100vh-2rem)] ml-4">
-<h3 class="text-lg font-semibold text-gray-800 mb-6">AI Assistants</h3>
-<!-- General LLM Chatbots -->
-<div>
-<div class="space-y-3">
+<!--</div>-->
+<!--&lt;!&ndash; Section 2: Credibility Assessment &ndash;&gt;-->
+<!--<div class="bg-white rounded-lg shadow-sm p-4">-->
+<!--&lt;!&ndash; Text Credibility &ndash;&gt;-->
+<!--<div class="mb-4">-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>-->
+<!--<div class="mb-2">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="text-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>-->
+<!--<textarea-->
+<!--  data-field="text-why"-->
+<!--  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"-->
+<!--  placeholder="Write your answer here"-->
+<!--  rows="2"></textarea>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Map Credibility &ndash;&gt;-->
+<!--<div class="mb-4">-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>-->
+<!--<div class="mb-2">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="map-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>-->
+<!--<textarea-->
+<!--  data-field="map-why"-->
+<!--  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"-->
+<!--  placeholder="Write your answer here"-->
+<!--  rows="2"></textarea>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; Agreement &ndash;&gt;-->
+<!--<div>-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>-->
+<!--<div class="mb-4">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="post-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
-  <div class="chatbot-item relative">
-<a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst"
-   target="_blank"
-   class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
-  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png"
-         alt="ChatGPT logo"
-         class="w-8 h-8 rounded-full object-contain"
-         loading="lazy" />
-  </div>
-  <div>
-    <div class="font-medium text-gray-800 text-sm">ChatGPT</div>
-    <div class="text-xs text-gray-500">Headline: 3 ; Map: 5</div>
-  </div>
-</a>
+
+<!--&lt;!&ndash; Section 4: Chatbot Sidebar &ndash;&gt;-->
+<!--<div class="w-[500px] bg-transparent p-6 overflow-y-auto overflow-x-visible sticky top-4 h-[calc(100vh-2rem)] ml-4">-->
+<!--<h3 class="text-lg font-semibold text-gray-800 mb-6">AI Assistants</h3>-->
+<!--&lt;!&ndash; General LLM Chatbots &ndash;&gt;-->
+<!--<div>-->
+<!--<div class="space-y-3">-->
+
+<!--  <div class="chatbot-item relative">-->
+<!--<a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst"-->
+<!--   target="_blank"-->
+<!--   class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">-->
+<!--  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">-->
+<!--    <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/ChatGPT-Logo.png"-->
+<!--         alt="ChatGPT logo"-->
+<!--         class="w-8 h-8 rounded-full object-contain"-->
+<!--         loading="lazy" />-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <div class="font-medium text-gray-800 text-sm">ChatGPT</div>-->
+<!--    <div class="text-xs text-gray-500">Headline: 3 ; Map: 5</div>-->
+<!--  </div>-->
+<!--</a>-->
 
 
-<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
+<!--<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">-->
 
-  <p class="text-sm text-gray-600" data-typed>
-    <strong>Headline credibility rating:</strong> 3 (Mostly Credible)<br><br>
-    The headline simplifies a complex finding. Studies (e.g., Kench et al. 2018, <em>Nature Communications</em>) show many atoll islands—including Tuvalu—have grown in land area since the 1970s due to natural sediment transport and coral-derived material. However, calling Tuvalu “sinking” is misleading: the nation faces <strong>sea-level rise</strong>, erosion, storm surge, and saltwater intrusion risks, so increased land area does not remove the existential threats to habitability. <em>(In-house knowledge)</em><br><br>
+<!--  <p class="text-sm text-gray-600" data-typed>-->
+<!--    <strong>Headline credibility rating:</strong> 3 (Mostly Credible)<br><br>-->
+<!--    The headline simplifies a complex finding. Studies (e.g., Kench et al. 2018, <em>Nature Communications</em>) show many atoll islands—including Tuvalu—have grown in land area since the 1970s due to natural sediment transport and coral-derived material. However, calling Tuvalu “sinking” is misleading: the nation faces <strong>sea-level rise</strong>, erosion, storm surge, and saltwater intrusion risks, so increased land area does not remove the existential threats to habitability. <em>(In-house knowledge)</em><br><br>-->
 
-    <strong>Map credibility rating:</strong> 5 (Highly Credible)<br><br>
-    The maps compare shorelines from 1971, 1984, 2006, and 2014 using aerial and satellite imagery, consistent with peer-reviewed geospatial analyses of atoll geomorphology. <em>(In-house knowledge)</em><br><br>
+<!--    <strong>Map credibility rating:</strong> 5 (Highly Credible)<br><br>-->
+<!--    The maps compare shorelines from 1971, 1984, 2006, and 2014 using aerial and satellite imagery, consistent with peer-reviewed geospatial analyses of atoll geomorphology. <em>(In-house knowledge)</em><br><br>-->
 
-    <strong>Reference:</strong> Kench, P. S., et al. (2018). <em>Patterns of island change and persistence offer alternate adaptation pathways for atoll nations</em>. <em>Nature Communications</em>, 9, 605.<br><br>
-    <strong>URL:</strong> <a href="https://www.nature.com/articles/s41467-018-02954-1" class="text-blue-600 underline">https://www.nature.com/articles/s41467-018-02954-1</a>.<br><br>
+<!--    <strong>Reference:</strong> Kench, P. S., et al. (2018). <em>Patterns of island change and persistence offer alternate adaptation pathways for atoll nations</em>. <em>Nature Communications</em>, 9, 605.<br><br>-->
+<!--    <strong>URL:</strong> <a href="https://www.nature.com/articles/s41467-018-02954-1" class="text-blue-600 underline">https://www.nature.com/articles/s41467-018-02954-1</a>.<br><br>-->
 
-    <a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst" class="text-blue-600 underline">I want to learn more from ChatGPT</a>
-
-
-  </p>
-</div>
-</div>
-
-<div class="chatbot-item relative">
-<a href="https://gemini.google.com/gem/980f79a3a48b" target="_blank" class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">
-  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">
-    <img src="https://helios-i.mashable.com/imagery/articles/00zEnhbB6mXQs8x5yXw38bT/images-2.fit_lim.size_376x.png"
-         alt="ChatGPT logo"
-         class="w-8 h-8 rounded-full object-contain"
-         loading="lazy" />
-  </div>
-  <div>
-    <div class="font-medium text-gray-800 text-sm">Gemini</div>
-    <div class="text-xs text-gray-500">Headline: 3 ; Map: 4</div>
-  </div>
-</a>
-
-<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">
-<p class="text-sm text-gray-600" data-typed><strong>Headline credibility rating:</strong> 3 (Mostly Credible)<br><br>
-The headline presents a seemingly counterintuitive finding—that a "sinking" nation is getting bigger. While it cites a specific study with dates and locations (Tuvalu's atolls), which lends it a degree of credibility, the use of the word "'Sinking'" in quotes could be a form of sensationalism or a subtle attempt to cast doubt on the established narrative of sea-level rise affecting low-lying islands. The headline might be oversimplifying a complex scientific finding and could be subject to confirmation bias for those who wish to downplay the effects of climate change.
-<br><br>
- <strong>Map credibility rating: 4</strong><br><br>
-The map is a composite of satellite and aerial imagery with superimposed outlines showing changes in land area over time for several islands in Tuvalu. It provides a clear visual representation of the data described in the headline. The use of a legend with different colors corresponding to specific years (1971, 1984, 2006, 2014) is a trustworthy practice that allows for a direct comparison of the changes. The inclusion of scale bars also contributes to the map's credibility. It directly supports the claim that the islands have shown growth, visually demonstrating the geographic changes mentioned.<br><br>
-  <a href="https://gemini.google.com/gem/980f79a3a48b" class="text-blue-600 underline">I want to learn more from Gemini</a>
-</p>
+<!--    <a href="https://chatgpt.com/g/g-68ad66d9b67481919b723020fe5c41a7-climap-analyst" class="text-blue-600 underline">I want to learn more from ChatGPT</a>-->
 
 
-</div>
-</div>
+<!--  </p>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div class="chatbot-item relative">-->
+<!--<a href="https://gemini.google.com/gem/980f79a3a48b" target="_blank" class="flex items-center p-2 rounded-lg border border-gray-200 hover:border-primary cursor-pointer transition-colors w-[180px] no-underline">-->
+<!--  <div class="w-8 h-8 flex items-center justify-center rounded-full mr-2">-->
+<!--    <img src="https://helios-i.mashable.com/imagery/articles/00zEnhbB6mXQs8x5yXw38bT/images-2.fit_lim.size_376x.png"-->
+<!--         alt="ChatGPT logo"-->
+<!--         class="w-8 h-8 rounded-full object-contain"-->
+<!--         loading="lazy" />-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <div class="font-medium text-gray-800 text-sm">Gemini</div>-->
+<!--    <div class="text-xs text-gray-500">Headline: 3 ; Map: 4</div>-->
+<!--  </div>-->
+<!--</a>-->
+
+<!--<div class="chatbot-popup absolute js-chatbot-popup top-0 bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-96 z-10">-->
+<!--<p class="text-sm text-gray-600" data-typed><strong>Headline credibility rating:</strong> 3 (Mostly Credible)<br><br>-->
+<!--The headline presents a seemingly counterintuitive finding—that a "sinking" nation is getting bigger. While it cites a specific study with dates and locations (Tuvalu's atolls), which lends it a degree of credibility, the use of the word "'Sinking'" in quotes could be a form of sensationalism or a subtle attempt to cast doubt on the established narrative of sea-level rise affecting low-lying islands. The headline might be oversimplifying a complex scientific finding and could be subject to confirmation bias for those who wish to downplay the effects of climate change.-->
+<!--<br><br>-->
+<!-- <strong>Map credibility rating: 4</strong><br><br>-->
+<!--The map is a composite of satellite and aerial imagery with superimposed outlines showing changes in land area over time for several islands in Tuvalu. It provides a clear visual representation of the data described in the headline. The use of a legend with different colors corresponding to specific years (1971, 1984, 2006, 2014) is a trustworthy practice that allows for a direct comparison of the changes. The inclusion of scale bars also contributes to the map's credibility. It directly supports the claim that the islands have shown growth, visually demonstrating the geographic changes mentioned.<br><br>-->
+<!--  <a href="https://gemini.google.com/gem/980f79a3a48b" class="text-blue-600 underline">I want to learn more from Gemini</a>-->
+<!--</p>-->
 
 
-</div>
-</div>
+<!--</div>-->
+<!--</div>-->
+
+
+<!--</div>-->
+<!--</div>-->
 
 
 
-</div>
-</div>
+<!--</div>-->
+<!--</div>-->
 
-<div class="map-overlay" id="map-overlay">
-<img alt="Enlarged Map" id="overlay-image" src=""/>
-</div>
-<script id="text-selection-script">
-document.addEventListener('DOMContentLoaded', function() {
-const headlineText = document.getElementById('headline-text');
-const copyButton = document.getElementById('copy-button');
-let selectedText = '';
-headlineText.addEventListener('mouseup', function() {
-const selection = window.getSelection();
-selectedText = selection.toString().trim();
-if (selectedText) {
-const range = selection.getRangeAt(0);
-const rect = range.getBoundingClientRect();
-const containerRect = headlineText.getBoundingClientRect();
-copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
-copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
-copyButton.classList.add('show');
-} else {
-copyButton.classList.remove('show');
-}
-});
-copyButton.addEventListener('click', function() {
-if (selectedText) {
-navigator.clipboard.writeText(selectedText).then(function() {
-copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
-setTimeout(function() {
-copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
-copyButton.classList.remove('show');
-}, 1500);
-});
-}
-});
-document.addEventListener('click', function(e) {
-if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
-copyButton.classList.remove('show');
-window.getSelection().removeAllRanges();
-}
-});
-});
-</script>
-<script id="map-interaction-script">
-document.addEventListener('DOMContentLoaded', function() {
-const mapContainers = document.querySelectorAll('.map-container');
-const mapOverlay = document.getElementById('map-overlay');
-const overlayImage = document.getElementById('overlay-image');
-mapContainers.forEach(container => {
-const img = container.querySelector('img');
-container.addEventListener('click', function() {
-overlayImage.src = img.src;
-mapOverlay.classList.add('show');
-});
-container.addEventListener('contextmenu', function(e) {
-e.preventDefault();
-const canvas = document.createElement('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = img.naturalWidth;
-canvas.height = img.naturalHeight;
-ctx.drawImage(img, 0, 0);
-canvas.toBlob(function(blob) {
-const item = new ClipboardItem({ 'image/png': blob });
-navigator.clipboard.write([item]);
-});
-});
-});
-mapOverlay.addEventListener('click', function() {
-mapOverlay.classList.remove('show');
-});
-});
-</script>
-<script id="slider-controls-script">
-document.addEventListener('DOMContentLoaded', function() {
-const textSlider = document.getElementById('text-slider');
-const mapSlider = document.getElementById('map-slider');
-const postSlider = document.getElementById('post-slider');
-const textValue = document.getElementById('text-value');
-const mapValue = document.getElementById('map-value');
-const postValue = document.getElementById('post-value');
-function updateSliderValue(slider, valueDisplay) {
-valueDisplay.textContent = slider.value;
-}
-textSlider.addEventListener('input', function() {
-updateSliderValue(textSlider, textValue);
-});
-mapSlider.addEventListener('input', function() {
-updateSliderValue(mapSlider, mapValue);
-});
-postSlider.addEventListener('input', function() {
-updateSliderValue(postSlider, postValue);
-});
-});
-</script>
+<!--<div class="map-overlay" id="map-overlay">-->
+<!--<img alt="Enlarged Map" id="overlay-image" src=""/>-->
+<!--</div>-->
+<!--<script id="text-selection-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const headlineText = document.getElementById('headline-text');-->
+<!--const copyButton = document.getElementById('copy-button');-->
+<!--let selectedText = '';-->
+<!--headlineText.addEventListener('mouseup', function() {-->
+<!--const selection = window.getSelection();-->
+<!--selectedText = selection.toString().trim();-->
+<!--if (selectedText) {-->
+<!--const range = selection.getRangeAt(0);-->
+<!--const rect = range.getBoundingClientRect();-->
+<!--const containerRect = headlineText.getBoundingClientRect();-->
+<!--copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';-->
+<!--copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';-->
+<!--copyButton.classList.add('show');-->
+<!--} else {-->
+<!--copyButton.classList.remove('show');-->
+<!--}-->
+<!--});-->
+<!--copyButton.addEventListener('click', function() {-->
+<!--if (selectedText) {-->
+<!--navigator.clipboard.writeText(selectedText).then(function() {-->
+<!--copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';-->
+<!--setTimeout(function() {-->
+<!--copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';-->
+<!--copyButton.classList.remove('show');-->
+<!--}, 1500);-->
+<!--});-->
+<!--}-->
+<!--});-->
+<!--document.addEventListener('click', function(e) {-->
+<!--if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {-->
+<!--copyButton.classList.remove('show');-->
+<!--window.getSelection().removeAllRanges();-->
+<!--}-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+<!--<script id="map-interaction-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const mapContainers = document.querySelectorAll('.map-container');-->
+<!--const mapOverlay = document.getElementById('map-overlay');-->
+<!--const overlayImage = document.getElementById('overlay-image');-->
+<!--mapContainers.forEach(container => {-->
+<!--const img = container.querySelector('img');-->
+<!--container.addEventListener('click', function() {-->
+<!--overlayImage.src = img.src;-->
+<!--mapOverlay.classList.add('show');-->
+<!--});-->
+<!--container.addEventListener('contextmenu', function(e) {-->
+<!--e.preventDefault();-->
+<!--const canvas = document.createElement('canvas');-->
+<!--const ctx = canvas.getContext('2d');-->
+<!--canvas.width = img.naturalWidth;-->
+<!--canvas.height = img.naturalHeight;-->
+<!--ctx.drawImage(img, 0, 0);-->
+<!--canvas.toBlob(function(blob) {-->
+<!--const item = new ClipboardItem({ 'image/png': blob });-->
+<!--navigator.clipboard.write([item]);-->
+<!--});-->
+<!--});-->
+<!--});-->
+<!--mapOverlay.addEventListener('click', function() {-->
+<!--mapOverlay.classList.remove('show');-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+<!--<script id="slider-controls-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const textSlider = document.getElementById('text-slider');-->
+<!--const mapSlider = document.getElementById('map-slider');-->
+<!--const postSlider = document.getElementById('post-slider');-->
+<!--const textValue = document.getElementById('text-value');-->
+<!--const mapValue = document.getElementById('map-value');-->
+<!--const postValue = document.getElementById('post-value');-->
+<!--function updateSliderValue(slider, valueDisplay) {-->
+<!--valueDisplay.textContent = slider.value;-->
+<!--}-->
+<!--textSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(textSlider, textValue);-->
+<!--});-->
+<!--mapSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(mapSlider, mapValue);-->
+<!--});-->
+<!--postSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(postSlider, postValue);-->
+<!--});-->
+<!--});-->
+<!--</script>-->
 
-</div>
-</template>
+<!--</div>-->
+<!--</template>-->
 
 <template id="tpl-LLM_p2">
 <div id="page-llmp2">
@@ -1428,11 +1427,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  6/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  4/9</h3>
 <div class="flex flex-col gap-2">
 <a class="block" data-readdy="true" data-goto="LLM_p3">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 6/12
+Next Post
 </div>
 </a>
 </div>
@@ -1725,11 +1724,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  7/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  5/9</h3>
 <div class="flex flex-col gap-2">
 <a class="block" data-readdy="true" data-goto="LLM_p4">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 7/12
+Next Post
 </div>
 </a>
 </div>
@@ -2019,11 +2018,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress 8/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress 6/9</h3>
 <div class="flex flex-col gap-2">
-<a class="block" data-readdy="true" data-goto="After_p1">
+<a class="block" data-readdy="true" data-goto="After_p2">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 8/12
+Next Post
 </div>
 </a>
 </div>
@@ -2307,251 +2306,251 @@ updateSliderValue(postSlider, postValue);
 </template>
 
 <!-- template after p1 -->
-<template id="tpl-After_p1">
-<div id="page-afterp1">
+<!--<template id="tpl-After_p1">-->
+<!--<div id="page-afterp1">-->
 
-<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">
-
-
-<!-- Progress Section -->
-<div class="w-[280px] flex flex-col gap-4 mt-8">
-<div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  9/12</h3>
-<div class="flex flex-col gap-2">
-<a class="block" data-readdy="true" data-goto="After_p2">
-<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 9/12
-</div>
-</a>
-</div>
-</div>
-</div>
+<!--<div class="flex min-h-screen justify-center gap-4 pl-0 pr-8">-->
 
 
-<!-- Main Content -->
-<div class="flex-1 max-w-4xl pl-0">
+<!--&lt;!&ndash; Progress Section &ndash;&gt;-->
+<!--<div class="w-[280px] flex flex-col gap-4 mt-8">-->
+<!--<div class="bg-white rounded-lg shadow-sm p-4">-->
+<!--<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  9/12</h3>-->
+<!--<div class="flex flex-col gap-2">-->
+<!--<a class="block" data-readdy="true" data-goto="After_p2">-->
+<!--<div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">-->
+<!--Next Post-->
+<!--</div>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
 
-<!-- Section 1: Content -->
-<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">
-<div class="flex items-center gap-3 mb-6">
-<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
-<i class="ri-user-3-line text-gray-600 text-xl"></i>
-</div>
-</div>
-<div class="relative mb-6" id="headline-container">
-<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">
-Greenland's Petermann Glacier has grown nearly ten miles since 2012, when the press hysterically announced the glacier's imminent demise. For some reason the press isn't talking about this.<br>
-#ClimateScam
-</p>
-<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">
-<div class="w-4 h-4 flex items-center justify-center">
-<i class="ri-file-copy-line text-sm"></i>
-</div>
-Copy
-</button>
-</div>
-<div class="map-container mt-4 flex justify-center gap-4">
-  <img
-    alt="Climate Change Map A"
-    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
-    src="https://i.imgur.com/OIduwpl.png"
-  />
-  <img
-    alt="Climate Change Map B"
-    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"
-    src="https://i.imgur.com/BUyVXu1.png"
-  />
-</div>
+<!--&lt;!&ndash; Main Content &ndash;&gt;-->
+<!--<div class="flex-1 max-w-4xl pl-0">-->
 
 
-</div>
+<!--&lt;!&ndash; Section 1: Content &ndash;&gt;-->
+<!--<div class="bg-white rounded-lg shadow-sm p-6 mb-2 mt-8">-->
+<!--<div class="flex items-center gap-3 mb-6">-->
+<!--<div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">-->
+<!--<i class="ri-user-3-line text-gray-600 text-xl"></i>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="relative mb-6" id="headline-container">-->
+<!--<p class="text-gray-700 leading-relaxed text-xl font-['Helvetica']" id="headline-text">-->
+<!--Greenland's Petermann Glacier has grown nearly ten miles since 2012, when the press hysterically announced the glacier's imminent demise. For some reason the press isn't talking about this.<br>-->
+<!--#ClimateScam-->
+<!--</p>-->
+<!--<button class="copy-button absolute bg-primary text-white px-3 py-1.5 rounded-button text-sm font-medium whitespace-nowrap flex items-center gap-2 shadow-lg" id="copy-button">-->
+<!--<div class="w-4 h-4 flex items-center justify-center">-->
+<!--<i class="ri-file-copy-line text-sm"></i>-->
+<!--</div>-->
+<!--Copy-->
+<!--</button>-->
+<!--</div>-->
+<!--<div class="map-container mt-4 flex justify-center gap-4">-->
+<!--  <img-->
+<!--    alt="Climate Change Map A"-->
+<!--    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"-->
+<!--    src="https://i.imgur.com/OIduwpl.png"-->
+<!--  />-->
+<!--  <img-->
+<!--    alt="Climate Change Map B"-->
+<!--    class="w-[400px] h-auto object-contain rounded-lg border border-gray-200"-->
+<!--    src="https://i.imgur.com/BUyVXu1.png"-->
+<!--  />-->
+<!--</div>-->
 
 
-<!-- Section 2: Credibility Assessment -->
-<div class="bg-white rounded-lg shadow-sm p-4 pl-6">
-
-<!-- Text Credibility -->
-<div class="mb-4">
-<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>
-<div class="mb-2">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
-<span class="text-sm font-medium text-gray-800" id="text-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-
-<div>
-<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
-<textarea
-  data-field="text-why"
-  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
-  placeholder="Write your answer here"
-  rows="2"></textarea>
-</div>
-
-</div>
-
-<!-- Map Credibility -->
-<div class="mb-4">
-<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>
-<div class="mb-2">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>
-<span class="text-sm font-medium text-gray-800" id="map-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-<div>
-<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>
-<textarea
-  data-field="map-why"
-  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"
-  placeholder="Write your answer here"
-  rows="2"></textarea>
-</div>
-</div>
-
-<!-- Agreement -->
-<div>
-<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>
-<div class="mb-4">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>
-<span class="text-sm font-medium text-gray-800" id="post-value">0</span>
-</div>
-<div class="relative">
-<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>
-</div>
-<div class="flex justify-between text-xs text-gray-500 mt-1">
-<span>-5</span>
-<span>0</span>
-<span>5</span>
-</div>
-</div>
-</div>
-</div>
-</div>
+<!--</div>-->
 
 
-<!-- Section 4: Chatbot Sidebar -->
-</div>
+<!--&lt;!&ndash; Section 2: Credibility Assessment &ndash;&gt;-->
+<!--<div class="bg-white rounded-lg shadow-sm p-4 pl-6">-->
 
-<div class="map-overlay" id="map-overlay">
-<img alt="Enlarged Map" id="overlay-image" src=""/>
-</div>
-<script id="text-selection-script">
-document.addEventListener('DOMContentLoaded', function() {
-const headlineText = document.getElementById('headline-text');
-const copyButton = document.getElementById('copy-button');
-let selectedText = '';
-headlineText.addEventListener('mouseup', function() {
-const selection = window.getSelection();
-selectedText = selection.toString().trim();
-if (selectedText) {
-const range = selection.getRangeAt(0);
-const rect = range.getBoundingClientRect();
-const containerRect = headlineText.getBoundingClientRect();
-copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';
-copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';
-copyButton.classList.add('show');
-} else {
-copyButton.classList.remove('show');
-}
-});
-copyButton.addEventListener('click', function() {
-if (selectedText) {
-navigator.clipboard.writeText(selectedText).then(function() {
-copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';
-setTimeout(function() {
-copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';
-copyButton.classList.remove('show');
-}, 1500);
-});
-}
-});
-document.addEventListener('click', function(e) {
-if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {
-copyButton.classList.remove('show');
-window.getSelection().removeAllRanges();
-}
-});
-});
-</script>
-<script id="map-interaction-script">
-document.addEventListener('DOMContentLoaded', function() {
-const mapContainers = document.querySelectorAll('.map-container');
-const mapOverlay = document.getElementById('map-overlay');
-const overlayImage = document.getElementById('overlay-image');
-mapContainers.forEach(container => {
-const img = container.querySelector('img');
-container.addEventListener('click', function() {
-overlayImage.src = img.src;
-mapOverlay.classList.add('show');
-});
-container.addEventListener('contextmenu', function(e) {
-e.preventDefault();
-const canvas = document.createElement('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = img.naturalWidth;
-canvas.height = img.naturalHeight;
-ctx.drawImage(img, 0, 0);
-canvas.toBlob(function(blob) {
-const item = new ClipboardItem({ 'image/png': blob });
-navigator.clipboard.write([item]);
-});
-});
-});
-mapOverlay.addEventListener('click', function() {
-mapOverlay.classList.remove('show');
-});
-});
-</script>
-<script id="slider-controls-script">
-document.addEventListener('DOMContentLoaded', function() {
-const textSlider = document.getElementById('text-slider');
-const mapSlider = document.getElementById('map-slider');
-const postSlider = document.getElementById('post-slider');
-const textValue = document.getElementById('text-value');
-const mapValue = document.getElementById('map-value');
-const postValue = document.getElementById('post-value');
-function updateSliderValue(slider, valueDisplay) {
-valueDisplay.textContent = slider.value;
-}
-textSlider.addEventListener('input', function() {
-updateSliderValue(textSlider, textValue);
-});
-mapSlider.addEventListener('input', function() {
-updateSliderValue(mapSlider, mapValue);
-});
-postSlider.addEventListener('input', function() {
-updateSliderValue(postSlider, postValue);
-});
-});
-</script>
+<!--&lt;!&ndash; Text Credibility &ndash;&gt;-->
+<!--<div class="mb-4">-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-2">Headline Credibility</h4>-->
+<!--<div class="mb-2">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="text-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="text-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
 
-</div>
-<!-- Overlay element for enlarged maps -->
-<div class="map-overlay" id="map-overlay">
-  <img id="overlay-image" alt="Enlarged Map" src=""/>
-</div>
+<!--<div>-->
+<!--<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>-->
+<!--<textarea-->
+<!--  data-field="text-why"-->
+<!--  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"-->
+<!--  placeholder="Write your answer here"-->
+<!--  rows="2"></textarea>-->
+<!--</div>-->
 
-</template>
+<!--</div>-->
+
+<!--&lt;!&ndash; Map Credibility &ndash;&gt;-->
+<!--<div class="mb-4">-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-2">Map Credibility</h4>-->
+<!--<div class="mb-2">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Not Credible) to 5 (Highly Credible)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="map-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="map-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div>-->
+<!--<label class="block text-sm font-medium text-gray-700 mb-2">Why?</label>-->
+<!--<textarea-->
+<!--  data-field="map-why"-->
+<!--  class="w-[95%] p-3 border border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"-->
+<!--  placeholder="Write your answer here"-->
+<!--  rows="2"></textarea>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Agreement &ndash;&gt;-->
+<!--<div>-->
+<!--<h4 class="text-md font-medium text-gray-700 mb-3">Agreement to the post</h4>-->
+<!--<div class="mb-4">-->
+<!--<div class="flex items-center justify-between mb-2">-->
+<!--<span class="text-sm text-gray-600">Rate from -5 (Strongly Disagree) to 5 (Highly Agree)</span>-->
+<!--<span class="text-sm font-medium text-gray-800" id="post-value">0</span>-->
+<!--</div>-->
+<!--<div class="relative">-->
+<!--<input class="w-full h-2 rounded-full appearance-none cursor-pointer border border-gray-300" id="post-slider" max="5" min="-5" type="range" value="0"/>-->
+<!--</div>-->
+<!--<div class="flex justify-between text-xs text-gray-500 mt-1">-->
+<!--<span>-5</span>-->
+<!--<span>0</span>-->
+<!--<span>5</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash; Section 4: Chatbot Sidebar &ndash;&gt;-->
+<!--</div>-->
+
+<!--<div class="map-overlay" id="map-overlay">-->
+<!--<img alt="Enlarged Map" id="overlay-image" src=""/>-->
+<!--</div>-->
+<!--<script id="text-selection-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const headlineText = document.getElementById('headline-text');-->
+<!--const copyButton = document.getElementById('copy-button');-->
+<!--let selectedText = '';-->
+<!--headlineText.addEventListener('mouseup', function() {-->
+<!--const selection = window.getSelection();-->
+<!--selectedText = selection.toString().trim();-->
+<!--if (selectedText) {-->
+<!--const range = selection.getRangeAt(0);-->
+<!--const rect = range.getBoundingClientRect();-->
+<!--const containerRect = headlineText.getBoundingClientRect();-->
+<!--copyButton.style.left = (rect.left - containerRect.left + rect.width / 2 - 30) + 'px';-->
+<!--copyButton.style.top = (rect.top - containerRect.top - 40) + 'px';-->
+<!--copyButton.classList.add('show');-->
+<!--} else {-->
+<!--copyButton.classList.remove('show');-->
+<!--}-->
+<!--});-->
+<!--copyButton.addEventListener('click', function() {-->
+<!--if (selectedText) {-->
+<!--navigator.clipboard.writeText(selectedText).then(function() {-->
+<!--copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-check-line text-sm"></i></div>Copied!';-->
+<!--setTimeout(function() {-->
+<!--copyButton.innerHTML = '<div class="w-4 h-4 flex items-center justify-center"><i class="ri-file-copy-line text-sm"></i></div>Copy';-->
+<!--copyButton.classList.remove('show');-->
+<!--}, 1500);-->
+<!--});-->
+<!--}-->
+<!--});-->
+<!--document.addEventListener('click', function(e) {-->
+<!--if (!headlineText.contains(e.target) && !copyButton.contains(e.target)) {-->
+<!--copyButton.classList.remove('show');-->
+<!--window.getSelection().removeAllRanges();-->
+<!--}-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+<!--<script id="map-interaction-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const mapContainers = document.querySelectorAll('.map-container');-->
+<!--const mapOverlay = document.getElementById('map-overlay');-->
+<!--const overlayImage = document.getElementById('overlay-image');-->
+<!--mapContainers.forEach(container => {-->
+<!--const img = container.querySelector('img');-->
+<!--container.addEventListener('click', function() {-->
+<!--overlayImage.src = img.src;-->
+<!--mapOverlay.classList.add('show');-->
+<!--});-->
+<!--container.addEventListener('contextmenu', function(e) {-->
+<!--e.preventDefault();-->
+<!--const canvas = document.createElement('canvas');-->
+<!--const ctx = canvas.getContext('2d');-->
+<!--canvas.width = img.naturalWidth;-->
+<!--canvas.height = img.naturalHeight;-->
+<!--ctx.drawImage(img, 0, 0);-->
+<!--canvas.toBlob(function(blob) {-->
+<!--const item = new ClipboardItem({ 'image/png': blob });-->
+<!--navigator.clipboard.write([item]);-->
+<!--});-->
+<!--});-->
+<!--});-->
+<!--mapOverlay.addEventListener('click', function() {-->
+<!--mapOverlay.classList.remove('show');-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+<!--<script id="slider-controls-script">-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--const textSlider = document.getElementById('text-slider');-->
+<!--const mapSlider = document.getElementById('map-slider');-->
+<!--const postSlider = document.getElementById('post-slider');-->
+<!--const textValue = document.getElementById('text-value');-->
+<!--const mapValue = document.getElementById('map-value');-->
+<!--const postValue = document.getElementById('post-value');-->
+<!--function updateSliderValue(slider, valueDisplay) {-->
+<!--valueDisplay.textContent = slider.value;-->
+<!--}-->
+<!--textSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(textSlider, textValue);-->
+<!--});-->
+<!--mapSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(mapSlider, mapValue);-->
+<!--});-->
+<!--postSlider.addEventListener('input', function() {-->
+<!--updateSliderValue(postSlider, postValue);-->
+<!--});-->
+<!--});-->
+<!--</script>-->
+
+<!--</div>-->
+<!--&lt;!&ndash; Overlay element for enlarged maps &ndash;&gt;-->
+<!--<div class="map-overlay" id="map-overlay">-->
+<!--  <img id="overlay-image" alt="Enlarged Map" src=""/>-->
+<!--</div>-->
+
+<!--</template>-->
 
 <!-- template after p2 -->
 <template id="tpl-After_p2">
@@ -2563,11 +2562,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  10/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  7/9</h3>
 <div class="flex flex-col gap-2">
 <a class="block" data-readdy="true" data-goto="After_p3">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 10/12
+Next Post
 </div>
 </a>
 </div>
@@ -2814,11 +2813,11 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  11/12</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress  8/9</h3>
 <div class="flex flex-col gap-2">
 <a class="block" data-readdy="true" data-goto="After_p4">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
-Next Post 11/12
+Next Post
 </div>
 </a>
 </div>
@@ -3063,7 +3062,7 @@ updateSliderValue(postSlider, postValue);
 <!-- Progress Section -->
 <div class="w-[280px] flex flex-col gap-4 mt-8">
 <div class="bg-white rounded-lg shadow-sm p-4">
-<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress</h3>
+<h3 class="text-lg font-medium text-gray-800 mb-4">Your Progress 9/9</h3>
 <div class="flex flex-col gap-2">
 <a class="block" data-readdy="true" data-goto="results">
 <div class="bg-gray-100 rounded p-3 text-sm text-gray-600 hover:bg-gray-200 transition-colors">
@@ -3356,15 +3355,15 @@ const app = document.getElementById('app');
 
 const pages = {
   'UserID': document.getElementById('tpl-UserID'),
-  'Before_p1': document.getElementById('tpl-Before_p1'),
+  // 'Before_p1': document.getElementById('tpl-Before_p1'),
   'Before_p2': document.getElementById('tpl-Before_p2'),
   'Before_p3': document.getElementById('tpl-Before_p3'),
   'Before_p4': document.getElementById('tpl-Before_p4'),
-  'LLM_p1': document.getElementById('tpl-LLM_p1'),
+  // 'LLM_p1': document.getElementById('tpl-LLM_p1'),
   'LLM_p2': document.getElementById('tpl-LLM_p2'),
   'LLM_p3': document.getElementById('tpl-LLM_p3'),
   'LLM_p4': document.getElementById('tpl-LLM_p4'),
-  'After_p1': document.getElementById('tpl-After_p1'),
+  // 'After_p1': document.getElementById('tpl-After_p1'),
   'After_p2': document.getElementById('tpl-After_p2'),
   'After_p3': document.getElementById('tpl-After_p3'),
   'After_p4': document.getElementById('tpl-After_p4'),
@@ -3585,7 +3584,7 @@ function bindNavigation(root){
     });
   });
 
-  // UserID: Continue -> Before_p1 (save ID + start timer)
+  // UserID: Continue -> Before_p2 (save ID + start timer)
   const userIdRoot = root.querySelector('#page-userid');
   if (userIdRoot){
     userIdRoot.querySelectorAll('button, a').forEach(el=>{
@@ -3596,41 +3595,41 @@ function bindNavigation(root){
           const uid = (input?.value || '').trim();
           sessionStorage.setItem('userID', uid);
           updateResultsUserIds(document);
-          showPage('Before_p1');
-          window.startTimer?.('Before_p1');   // 计时 Before_p1
+          showPage('Before_p2');
+          window.startTimer?.('Before_p2');   // 计时 Before_p2
         });
       }
     });
   }
 
-  /* ===== BEFORE 链路：p1 -> p2 -> p3 -> p4 -> LLM_p1 ===== */
-  // Before_p1 -> Before_p2
-  const beforeP1 = root.querySelector('#page-beforep1');
-  if (beforeP1){
-    beforeP1.querySelectorAll('a,button').forEach(el=>{
-        const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'Before_p2') {
-        el.addEventListener('click', (ev)=>{
-          ev.preventDefault?.();
-          collectAndGo(beforeP1, 'Before_p1', {
-            headlineCredibility: '#text-slider',
-            textWhy:         'textarea[data-field="text-why"]',
-            mapCredibility:  '#map-slider',
-            mapWhy:          'textarea[data-field="map-why"]',
-            overallRating:   '#post-slider'
-          }, 'Before_p2');
-          window.startTimer?.('Before_p2');
-        });
-      }
-    });
-  }
+//   /* ===== BEFORE 链路：p1 -> p2 -> p3 -> p4 -> LLM_p1 ===== */
+//   // Before_p1 -> Before_p2
+//   const beforeP1 = root.querySelector('#page-beforep1');
+//   if (beforeP1){
+//     beforeP1.querySelectorAll('a,button').forEach(el=>{
+//         const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
+// if (/^\s*next\s+post\s*$/i.test(el.textContent) || el.dataset.goto === 'Before_p2') {
+//         el.addEventListener('click', (ev)=>{
+//           ev.preventDefault?.();
+//           collectAndGo(beforeP1, 'Before_p1', {
+//             headlineCredibility: '#text-slider',
+//             textWhy:         'textarea[data-field="text-why"]',
+//             mapCredibility:  '#map-slider',
+//             mapWhy:          'textarea[data-field="map-why"]',
+//             overallRating:   '#post-slider'
+//           }, 'Before_p2');
+//           window.startTimer?.('Before_p2');
+//         });
+//       }
+//     });
+//   }
 
   // Before_p2 -> Before_p3
   const beforeP2 = root.querySelector('#page-beforep2');
   if (beforeP2){
     beforeP2.querySelectorAll('a,button').forEach(el=>{
         const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'Before_p3') {
+if (/^\s*next\s+post\s*$/i.test(el.textContent) || el.dataset.goto === 'Before_p3') {
         el.addEventListener('click', (ev)=>{
           ev.preventDefault?.();
           collectAndGo(beforeP2, 'Before_p2', {
@@ -3651,7 +3650,7 @@ if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'Before_
   if (beforeP3){
     beforeP3.querySelectorAll('a,button').forEach(el=>{
         const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'Before_p4') {
+if (/^\s*next\s+post\s*$/i.test(el.textContent) || el.dataset.goto === 'Before_p4') {
         el.addEventListener('click', (ev)=>{
           ev.preventDefault?.();
           collectAndGo(beforeP3, 'Before_p3', {
@@ -3672,32 +3671,10 @@ if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'Before_
   if (beforeP4){
     beforeP4.querySelectorAll('a,button').forEach(el=>{
         const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'LLM_p1') {
+if (/^\s*next\s+post\s*$/i.test(el.textContent) || el.dataset.goto === 'LLM_p2') {
         el.addEventListener('click', (ev)=>{
           ev.preventDefault?.();
           collectAndGo(beforeP4, 'Before_p4', {
-            headlineCredibility: '#text-slider',
-            textWhy:         'textarea[data-field="text-why"]',
-            mapCredibility:  '#map-slider',
-            mapWhy:          'textarea[data-field="map-why"]',
-            overallRating:   '#post-slider'
-          }, 'LLM_p1');
-          window.startTimer?.('LLM_p1');
-        });
-      }
-    });
-  }
-
-  /* ===== LLM 链路：LLM_p1 -> p2 -> p3 -> p4 -> Results ===== */
-  // LLM_p1 -> LLM_p2
-  const llmP1 = root.querySelector('#page-llmp1');
-  if (llmP1){
-    llmP1.querySelectorAll('a,button').forEach(el=>{
-        const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'LLM_p2') {
-        el.addEventListener('click', (ev)=>{
-          ev.preventDefault?.();
-          collectAndGo(llmP1, 'LLM_p1', {
             headlineCredibility: '#text-slider',
             textWhy:         'textarea[data-field="text-why"]',
             mapCredibility:  '#map-slider',
@@ -3710,12 +3687,34 @@ if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'LLM_p2'
     });
   }
 
+//   /* ===== LLM 链路：LLM_p1 -> p2 -> p3 -> p4 -> Results ===== */
+//   // LLM_p1 -> LLM_p2
+//   const llmP1 = root.querySelector('#page-llmp1');
+//   if (llmP1){
+//     llmP1.querySelectorAll('a,button').forEach(el=>{
+//         const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
+// if (/^\s*next\s+post\s*$/i.test(el.textContent) || el.dataset.goto === 'LLM_p2') {
+//         el.addEventListener('click', (ev)=>{
+//           ev.preventDefault?.();
+//           collectAndGo(llmP1, 'LLM_p1', {
+//             headlineCredibility: '#text-slider',
+//             textWhy:         'textarea[data-field="text-why"]',
+//             mapCredibility:  '#map-slider',
+//             mapWhy:          'textarea[data-field="map-why"]',
+//             overallRating:   '#post-slider'
+//           }, 'LLM_p2');
+//           window.startTimer?.('LLM_p2');
+//         });
+//       }
+//     });
+//   }
+
   // LLM_p2 -> LLM_p3
   const llmP2 = root.querySelector('#page-llmp2');
   if (llmP2){
     llmP2.querySelectorAll('a,button').forEach(el=>{
         const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'LLM_p3') {
+if (/^\s*next\s+post\s*$/i.test(el.textContent) || el.dataset.goto === 'LLM_p3') {
         el.addEventListener('click', (ev)=>{
           ev.preventDefault?.();
           collectAndGo(llmP2, 'LLM_p2', {
@@ -3736,7 +3735,7 @@ if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'LLM_p3'
   if (llmP3){
     llmP3.querySelectorAll('a,button').forEach(el=>{
         const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent) || el.dataset.goto === 'LLM_p4') {
+if (/^\s*next\s+post\s*$/i.test(el.textContent) || el.dataset.goto === 'LLM_p4') {
         el.addEventListener('click', (ev)=>{
           ev.preventDefault?.();
           collectAndGo(llmP3, 'LLM_p3', {
@@ -3757,8 +3756,8 @@ const llmP4 = root.querySelector('#page-llmp4');
 if (llmP4){
   llmP4.querySelectorAll('a,button').forEach(el=>{
       const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent)
-        || el.dataset.goto === 'After_p1') {
+if (/^\s*next\s+post\s*$/i.test(el.textContent)
+        || el.dataset.goto === 'After_p2') {
       el.addEventListener('click', (ev)=>{
         ev.preventDefault?.();
         collectAndGo(llmP4, 'LLM_p4', {
@@ -3767,41 +3766,41 @@ if (/^next post \d+\/\d+$/i.test(el.textContent)
           mapCredibility:  '#map-slider',
           mapWhy:          'textarea[data-field="map-why"]',
           overallRating:   '#post-slider'
-        }, 'After_p1');         // 跳 After_p1
-        window.startTimer?.('After_p1'); // 开始计时 After_p1
+        }, 'After_p2');         // 跳 After_p1
+        window.startTimer?.('After_p2'); // 开始计时 After_p1
       });
     }
   });
 }
 
-// After_p1 -> After_p2
-const afterP1 = root.querySelector('#page-afterp1');
-if (afterP1){
-  afterP1.querySelectorAll('a,button').forEach(el=>{
-      const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent)
-        || el.dataset.goto === 'After_p2') {
-      el.addEventListener('click', (ev)=>{
-        ev.preventDefault?.();
-        collectAndGo(afterP1, 'After_p1', {
-          headlineCredibility: '#text-slider',
-          textWhy:         'textarea[data-field="text-why"]',
-          mapCredibility:  '#map-slider',
-          mapWhy:          'textarea[data-field="map-why"]',
-          overallRating:   '#post-slider'
-        }, 'After_p2');
-        window.startTimer?.('After_p2');
-      });
-    }
-  });
-}
+// // After_p1 -> After_p2
+// const afterP1 = root.querySelector('#page-afterp1');
+// if (afterP1){
+//   afterP1.querySelectorAll('a,button').forEach(el=>{
+//       const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
+// if (/^\s*next\s+post\s*$/i.test(el.textContent)
+//         || el.dataset.goto === 'After_p2') {
+//       el.addEventListener('click', (ev)=>{
+//         ev.preventDefault?.();
+//         collectAndGo(afterP1, 'After_p1', {
+//           headlineCredibility: '#text-slider',
+//           textWhy:         'textarea[data-field="text-why"]',
+//           mapCredibility:  '#map-slider',
+//           mapWhy:          'textarea[data-field="map-why"]',
+//           overallRating:   '#post-slider'
+//         }, 'After_p2');
+//         window.startTimer?.('After_p2');
+//       });
+//     }
+//   });
+// }
 
 // After_p2 -> After_p3
 const afterP2 = root.querySelector('#page-afterp2');
 if (afterP2){
   afterP2.querySelectorAll('a,button').forEach(el=>{
       const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent)
+if (/^\s*next\s+post\s*$/i.test(el.textContent)
         || el.dataset.goto === 'After_p3') {
       el.addEventListener('click', (ev)=>{
         ev.preventDefault?.();
@@ -3823,7 +3822,7 @@ const afterP3 = root.querySelector('#page-afterp3');
 if (afterP3){
   afterP3.querySelectorAll('a,button').forEach(el=>{
       const txt = (el.textContent || '').replace(/\s+/g, ' ').trim(); // ← 关键
-if (/^next post \d+\/\d+$/i.test(el.textContent)
+if (/^\s*next\s+post\s*$/i.test(el.textContent)
         || el.dataset.goto === 'After_p4') {
       el.addEventListener('click', (ev)=>{
         ev.preventDefault?.();
